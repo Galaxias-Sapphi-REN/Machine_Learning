@@ -27,7 +27,7 @@
 
 在机器学习中，最常用的是右图的**M-P神经元模型**（亦称为**阈值逻辑单元（threshold logic unit）**）。树突对应于输入部分，每个神经元接收到若干个来自其他神经元的输入信号，这些信号通过带权重的**连接（connection）**传递给细胞体，这些权重又称为**连接权**。细胞体分为两部分，前一部分计算**总输入值（即输入信号的加权和，或者说累积电平）**；后一部分先计算总输入值与该神经元的阈值的差值，然后通过**激活函数（activation function）**的处理，从轴突输出给其它神经元。也即：
 
-$$y = f(\sum_i w_i x_i -\theta)$$
+<img src="http://latex.codecogs.com/gif.latex?y = f(\sum_i w_i x_i -\theta)" />
 
 最理想的激活函数是阶跃函数，但它不连续。类似于线性分类，可以采用Sigmoid函数来近似。因为这类函数能把较大范围内变化的输入值挤压到 (0,1) 输出值范围内，所以也称为**挤压函数（squashing function）**。
 
@@ -43,13 +43,13 @@ $$y = f(\sum_i w_i x_i -\theta)$$
 
 两层是指输入层和输出层，但**只有输出层是M-P神经元**，也即**只有一层功能神经元（functional neuron）**。输入层只负责把每一个样本的各个属性传递给输出层（**输入层的神经元数量等于样本的属性数目**），不进行函数处理。其实说白了这个模型跟逻辑回归是一样的，不过按我的理解就是感知机的输出层可以有多个神经元，产生多个输出。而且线性模型中偏置项是和属性一起加权求和的，但神经网络中则是求属性加权和和预测的差。
 
-有时候阈值 $\theta$ 可以看作一个**输入固定为 $-1.0$ 的哑结点（dummy node）**，连接权为 $w_{n+1}$。这样就可以把权重和阈值的学习统一为权重的学习了。更新权重的方式如下：
+有时候阈值 <img src="http://latex.codecogs.com/gif.latex?\theta" />  可以看作一个**输入固定为 <img src="http://latex.codecogs.com/gif.latex?-1.0" />  的哑结点（dummy node）**，连接权为 <img src="http://latex.codecogs.com/gif.latex?w_{n+1}" /> 。这样就可以把权重和阈值的学习统一为权重的学习了。更新权重的方式如下：
 
-$$w_i \leftarrow w_i + \Delta w_i$$
+<img src="http://latex.codecogs.com/gif.latex?w_i \leftarrow w_i + \Delta w_i" />
 
-$$\Delta  w_i= \eta (y - \hat{y}) x_i$$
+<img src="http://latex.codecogs.com/gif.latex?\Delta  w_i= \eta (y - \hat{y}) x_i" />
 
-其中，$\eta$ 称为**学习率（learning rate）**，取值范围是 (0,1)。感知机是**逐个数据点输入来更新**的。设定初始的权重后，逐个点输入，如果没有预测错就继续检验下一个点；如果预测错了就更新权重，然后重新开始逐个点检验，**直到所有点都预测正确了就停止更新**（所以这其实是一种最小化经验误差的方法）。
+其中，<img src="http://latex.codecogs.com/gif.latex?\eta" />  称为**学习率（learning rate）**，取值范围是 (0,1)。感知机是**逐个数据点输入来更新**的。设定初始的权重后，逐个点输入，如果没有预测错就继续检验下一个点；如果预测错了就更新权重，然后重新开始逐个点检验，**直到所有点都预测正确了就停止更新**（所以这其实是一种最小化经验误差的方法）。
 
 已经证明了，**若两类模式是线性可分（linearly separable）的，即存在一个线性超平面能将它们分开**。比如二维平面上可以用一条**直线**完全分隔开两个类别的点。由于感知机只有一层功能神经元，所以学习能力极其有限，**只能处理线性可分问题**。对于这类问题，感知机的学习过程必然**收敛（converge）**而求出适当的权向量；对于线性不可分问题，感知机的学习过程会发生**振荡（fluctuation）**，难以稳定下来。
 
@@ -79,18 +79,18 @@ $$\Delta  w_i= \eta (y - \hat{y}) x_i$$
 
 ---
 
-输入：训练集 $D = {(\mathbf{x}_k,\mathbf{y}_k)}^m_{k=1}$，学习率 $\eta$。
+输入：训练集 <img src="http://latex.codecogs.com/gif.latex?D = {(\mathbf{x}_k,\mathbf{y}_k)}^m_{k=1}" /> ，学习率 <img src="http://latex.codecogs.com/gif.latex?\eta" /> 。
 
 过程：<br>
-1：在 $(0,1)$ 范围内随机初始化网络中所有连接权和阈值<br>
-2：$\mathbf{repeat}$<br>
-3：$\quad$ $\mathbf{for\ all}$ $(\mathbf{x}_k,\mathbf{y}_k \in D)$ $\mathbf{do}$<br>
-4：$\quad$ $\quad$ 根据当前参数计算出样本的输出 $\hat{\mathbf{y}}_k$<br>
-5：$\quad$ $\quad$ 计算输出层神经元的梯度项 $g_j$<br>
-6：$\quad$ $\quad$ 计算隐层神经元的梯度项 $e_h$<br>
-7：$\quad$ $\quad$ 更新连接权与阈值<br>
-8：$\quad$ $\mathbf{end for}$ <br>
-9：$\mathbf{until}$ 达到停止条件<br>
+1：在 <img src="http://latex.codecogs.com/gif.latex?(0,1)" />  范围内随机初始化网络中所有连接权和阈值<br>
+2：<img src="http://latex.codecogs.com/gif.latex?\mathbf{repeat}" /> <br>
+3：<img src="http://latex.codecogs.com/gif.latex?\quad" />  <img src="http://latex.codecogs.com/gif.latex?\mathbf{for\ all}" />  <img src="http://latex.codecogs.com/gif.latex?(\mathbf{x}_k,\mathbf{y}_k \in D)" />  <img src="http://latex.codecogs.com/gif.latex?\mathbf{do}" /> <br>
+4：<img src="http://latex.codecogs.com/gif.latex?\quad" />  <img src="http://latex.codecogs.com/gif.latex?\quad" />  根据当前参数计算出样本的输出 <img src="http://latex.codecogs.com/gif.latex?\hat{\mathbf{y}}_k" /> <br>
+5：<img src="http://latex.codecogs.com/gif.latex?\quad" />  <img src="http://latex.codecogs.com/gif.latex?\quad" />  计算输出层神经元的梯度项 <img src="http://latex.codecogs.com/gif.latex?g_j" /> <br>
+6：<img src="http://latex.codecogs.com/gif.latex?\quad" />  <img src="http://latex.codecogs.com/gif.latex?\quad" />  计算隐层神经元的梯度项 <img src="http://latex.codecogs.com/gif.latex?e_h" /> <br>
+7：<img src="http://latex.codecogs.com/gif.latex?\quad" />  <img src="http://latex.codecogs.com/gif.latex?\quad" />  更新连接权与阈值<br>
+8：<img src="http://latex.codecogs.com/gif.latex?\quad" />  <img src="http://latex.codecogs.com/gif.latex?\mathbf{end for}" />  <br>
+9：<img src="http://latex.codecogs.com/gif.latex?\mathbf{until}" />  达到停止条件<br>
 
 输出：连接权与阈值确定的多层前馈神经网络
 
@@ -98,13 +98,13 @@ $$\Delta  w_i= \eta (y - \hat{y}) x_i$$
 
 所谓**逆传播**其实就是从输出层开始逐步往后更新，因为输出层的误差确定后就可以对输出层的连接权和阈值进行更新，并且可以推算出隐含层输出的“真实值”，从而计算出隐含层的“误差”，然后更新隐含层的连接权和阈值。BP就是这样一种**利用一层层倒推来最终更新整个神经网络**的方法，每一层的更新公式其实和感知机用的是类似的。
 
-在学习过程中，学习率 $\eta$ 控制着每一轮迭代的更新步长，**太大则容易振荡**，**太小则收敛速度太慢**。有时为了**精细调节**，输出层和隐含层更新参数时会**使用不同的学习率**。
+在学习过程中，学习率 <img src="http://latex.codecogs.com/gif.latex?\eta" />  控制着每一轮迭代的更新步长，**太大则容易振荡**，**太小则收敛速度太慢**。有时为了**精细调节**，输出层和隐含层更新参数时会**使用不同的学习率**。
 
 #### 累积BP算法
 
-BP算法的目标是最小化训练集 $D$ 上的**累积误差**：
+BP算法的目标是最小化训练集 <img src="http://latex.codecogs.com/gif.latex?D" />  上的**累积误差**：
 
-$$E = \frac{1}{m}\sum_{k=1}^m E_k$$
+<img src="http://latex.codecogs.com/gif.latex?E = \frac{1}{m}\sum_{k=1}^m E_k" />
 
 而标准BP算法**每输入一个样例就进行一次更新**，所以它的参数更新非常频繁，而且不同样例可能会对更新起到**抵消**效果，从而使得模型需要更多次迭代才能到达累积误差的极小点。
 
@@ -112,7 +112,7 @@ $$E = \frac{1}{m}\sum_{k=1}^m E_k$$
 
 如果把更新方式变为**每输入一遍训练集进行一次更新**，就得到**累积BP算法**，更新公式需要重新推导一下。这样更新一次就称为**一轮（one round，亦称one epoch）**学习。
 
-使用累积BP算法时参数更新的频率要低得多，但是！在很多人任务中，**累积误差在下降到一定程度后，进一步下降会非常缓慢**。此时标准BP算法能更快地获得较好的解（特别是训练集 $D$ 很大的时候）。
+使用累积BP算法时参数更新的频率要低得多，但是！在很多人任务中，**累积误差在下降到一定程度后，进一步下降会非常缓慢**。此时标准BP算法能更快地获得较好的解（特别是训练集 <img src="http://latex.codecogs.com/gif.latex?D" />  很大的时候）。
 
 #### 隐层神经元个数
 
@@ -128,9 +128,9 @@ $$E = \frac{1}{m}\sum_{k=1}^m E_k$$
 
 - **正则化（regularization）**：在目标函数中添加一个用于**描述网络复杂度**的部分，比如连接权和阈值的平方和。这样训练时就会**偏好较小的连接权和阈值**，从而令输出更“光滑”。为什么可以用正则化来避免过拟合呢？可以看看[知乎上的解答](https://www.zhihu.com/question/20700829)。带正则化项的目标函数如下：
 
-$$E = \lambda\frac{1}{m}\sum_{k=1}^m E_k + (1-\lambda)\sum_i w_i^2$$
+<img src="http://latex.codecogs.com/gif.latex?E = \lambda\frac{1}{m}\sum_{k=1}^m E_k + (1-\lambda)\sum_i w_i^2" />
 
-其中 $\lambda$ 是用于对经验误差和网络复杂度折中的参数，常通过**交叉验证法**来估计。
+其中 <img src="http://latex.codecogs.com/gif.latex?\lambda" />  是用于对经验误差和网络复杂度折中的参数，常通过**交叉验证法**来估计。
 
 ## 全局最小与局部极小
 
@@ -226,7 +226,7 @@ Boltzmann机的神经元**分为显层与隐层**，显层用于表达数据的�
 
 #### 5.1
 
-> 问：试述将线性函数$f(\mathbf{x}) = \mathbf{w}^T\mathbf{x}$ 用作神经元激活函数的缺陷。
+> 问：试述将线性函数<img src="http://latex.codecogs.com/gif.latex?f(\mathbf{x}) = \mathbf{w}^T\mathbf{x}" />  用作神经元激活函数的缺陷。
 
 #### 5.2
 
@@ -234,7 +234,7 @@ Boltzmann机的神经元**分为显层与隐层**，显层用于表达数据的�
 
 #### 5.3
 
-> 问：对于图5.7中的$v_{ih}$，试推导出BP算法中的更新公式(5.13)。
+> 问：对于图5.7中的<img src="http://latex.codecogs.com/gif.latex?v_{ih}" /> ，试推导出BP算法中的更新公式(5.13)。
 
 #### 5.4
 
@@ -254,7 +254,7 @@ Boltzmann机的神经元**分为显层与隐层**，显层用于表达数据的�
 
 #### 5.8
 
-> 问：从网上下载或自己编程实现SOM网络，并观察其在西瓜数据集3.0$\alpha$上产生的效果。
+> 问：从网上下载或自己编程实现SOM网络，并观察其在西瓜数据集3.0<img src="http://latex.codecogs.com/gif.latex?\alpha" /> 上产生的效果。
 
 #### 5.9*
 

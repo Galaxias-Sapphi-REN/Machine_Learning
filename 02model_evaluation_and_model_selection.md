@@ -56,7 +56,7 @@
 
 #### 调参和最终模型
 
-**调参（parameter tuning）**一般先选定一个范围和变化步长，比如(0,1]，步长0.2，这样就有五个参数候选值。然后进行评估，选出最好的一个。这样选出的未必是全局最优的参数，但为了在开销和性能之间折中，只能这么做，毕竟我们无法试尽参数的所有取值。而且多个参数组合的情况是指数上升的，比方说有3个参数，每个参数评估5种取值，就需要测试多达 $5^3$ 种情形。
+**调参（parameter tuning）**一般先选定一个范围和变化步长，比如(0,1]，步长0.2，这样就有五个参数候选值。然后进行评估，选出最好的一个。这样选出的未必是全局最优的参数，但为了在开销和性能之间折中，只能这么做，毕竟我们无法试尽参数的所有取值。而且多个参数组合的情况是指数上升的，比方说有3个参数，每个参数评估5种取值，就需要测试多达 <img src="http://latex.codecogs.com/gif.latex?5^3" />  种情形。
 
 **特别注意**，训练/验证这个过程是为了让我们**确定学习算法和算法的参数**，确定了这些之后，我们需要再利用整个源数据集进行训练，这次训练所得的模型才是最终模型，也即提交给用户，进行测试的模型。
 
@@ -100,25 +100,25 @@
 
 **查准率，又称准确率（precision）**，用于衡量模型避免错误的能力，分母是模型预测的正例数目。
 
-$$precision = \frac{TP}{TP+FP}$$
+<img src="http://latex.codecogs.com/gif.latex?precision = \frac{TP}{TP+FP}" />
 
 **查全率，又称召回率（recall）**，用于衡量模型避免缺漏的能力，分母是测试样本真正包含的正例数目。
 
 一般来说，这两者是矛盾的，提高其中一者则另一者必然会有所降低。
 
-$$recall = \frac{TP}{TP+FN}$$
+<img src="http://latex.codecogs.com/gif.latex?recall = \frac{TP}{TP+FN}" />
 
 **F1**，是查准率和查全率的调和平均，用于综合考虑这两个性能度量。
 
-$$\frac{1}{F1} = \frac{1}{2} \times (\frac{1}{precision} + \frac{1}{recall}) \Rightarrow F1 = \frac{2 \times precision \times recall}{presion + recall}$$
+<img src="http://latex.codecogs.com/gif.latex?\frac{1}{F1} = \frac{1}{2} \times (\frac{1}{precision} + \frac{1}{recall}) \Rightarrow F1 = \frac{2 \times precision \times recall}{presion + recall}" />
 
-有时候我们对查准率，查全率的需求是不同的。比方说广告推荐，要尽量避免打扰用户，因此查准率更重要；而逃犯检索，因为漏检的危害很大，所以查全率更重要。这时就需要使用$F_\beta$了。
+有时候我们对查准率，查全率的需求是不同的。比方说广告推荐，要尽量避免打扰用户，因此查准率更重要；而逃犯检索，因为漏检的危害很大，所以查全率更重要。这时就需要使用<img src="http://latex.codecogs.com/gif.latex?F_\beta" /> 了。
 
-**$F_\beta$**，是查准率和查全率的加权调和平均，用于综合考虑这两个性能度量，并采用不同的权重。
+**<img src="http://latex.codecogs.com/gif.latex?F_\beta" /> **，是查准率和查全率的加权调和平均，用于综合考虑这两个性能度量，并采用不同的权重。
 
-$$\frac{1}{F_\beta} = \frac{1}{1+\beta^2} \times (\frac{1}{precision} + \frac{\beta^2}{recall}) \Rightarrow F_\beta = \frac{(1+\beta^2) \times precision \times recall}{(\beta^2 \times presion) + recall}$$
+<img src="http://latex.codecogs.com/gif.latex?\frac{1}{F_\beta} = \frac{1}{1+\beta^2} \times (\frac{1}{precision} + \frac{\beta^2}{recall}) \Rightarrow F_\beta = \frac{(1+\beta^2) \times precision \times recall}{(\beta^2 \times presion) + recall}" />
 
-其中 $\beta>0$ 度量了查全率对查准率的相对重要性，等于1时$F_\beta$退化为F1，小于1时查准率更重要，大于1时查全率更重要。
+其中 <img src="http://latex.codecogs.com/gif.latex?\beta>0" />  度量了查全率对查准率的相对重要性，等于1时<img src="http://latex.codecogs.com/gif.latex?F_\beta" /> 退化为F1，小于1时查准率更重要，大于1时查全率更重要。
 
 书中还介绍了如何对多次训练/测试产生的多个混淆矩阵进行评估，包括宏方法（先分别计算性能度量，再计算均值）和微方法（先对混淆矩阵各元素计算均值，再基于均值计算性能度量）两种途径。
 
@@ -132,9 +132,9 @@ $$\frac{1}{F_\beta} = \frac{1}{1+\beta^2} \times (\frac{1}{precision} + \frac{\b
 
 **ROC，全称受试者工作特征（Receiver Operating Characteristic）**。怎样画ROC曲线呢？先定义两个重要的计算量：**真正例率（True Positive Rate，简称TPR）**和**假正例率（False Positive Rate，简称FPR）**。
 
-$$TPR = \frac{TP}{TP+FN}$$
+<img src="http://latex.codecogs.com/gif.latex?TPR = \frac{TP}{TP+FN}" />
 
-$$FPR = \frac{FP}{TP+FN}$$
+<img src="http://latex.codecogs.com/gif.latex?FPR = \frac{FP}{TP+FN}" />
 
 TPR其实就等于召回率。在绘制ROC曲线时，纵轴为TPR，横轴为FPR。首先按预测值对样本进行排序，然后按序逐个把样本预测为正例，并计算此时的TPR和FPR，然后在图上画出该点，并与前一个点连线。如下图：
 
@@ -148,11 +148,11 @@ TPR其实就等于召回率。在绘制ROC曲线时，纵轴为TPR，横轴为FP
 
 若一个模型的ROC曲线完全包住了另一个模型的ROC曲线，我们就认为这个模型更优。但是如果两条曲线发生交叉，要怎么判断呢？比较合理的判据是**AUC（Area Under ROC Curve）**，即ROC曲线下的面积。
 
-$$AUC=\frac{1}{2}\sum_{i=1}^{m-1}(x_{i+1}-x_i)\cdot(y_i+y_{i+1})$$
+<img src="http://latex.codecogs.com/gif.latex?AUC=\frac{1}{2}\sum_{i=1}^{m-1}(x_{i+1}-x_i)\cdot(y_i+y_{i+1})" />
 
 补充一点，ROC曲线上的面积等于**排序损失（loss）**。也即有：
 
-$$AUC = 1 - \ell_{rank}$$
+<img src="http://latex.codecogs.com/gif.latex?AUC = 1 - \ell_{rank}" />
 
 #### 代价敏感错误率与代价曲线
 
@@ -174,20 +174,20 @@ $$AUC = 1 - \ell_{rank}$$
 <tr>
     <td align="center">第0类</td>
     <td align="center">0</td>
-    <td align="center">$cost_{01}$</td>
+    <td align="center"><img src="http://latex.codecogs.com/gif.latex?cost_{01}" /> </td>
 </tr>
 <tr>
     <td align="center">第1类</td>
-    <td align="center">$cost_{10}$</td>
+    <td align="center"><img src="http://latex.codecogs.com/gif.latex?cost_{10}" /> </td>
     <td align="center">0</td>
 </tr>
 </table>
 
-预测值与真实值相等时，自然错误代价为0。但把第0类错预测为第1类和把第1类错预测为第0类这两种错误的代价是不同的。注意，**重要的不是代价在数值上的大小，而是它们的比值**。比方说 $\frac{cost_{01}}{cost_{10}} > 1$， 这就说明把第0类错预测为第1类的代价更高。
+预测值与真实值相等时，自然错误代价为0。但把第0类错预测为第1类和把第1类错预测为第0类这两种错误的代价是不同的。注意，**重要的不是代价在数值上的大小，而是它们的比值**。比方说 <img src="http://latex.codecogs.com/gif.latex?\frac{cost_{01}}{cost_{10}} > 1" /> ， 这就说明把第0类错预测为第1类的代价更高。
 
 使用了非均等代价之后，我们在使用性能度量时自然也需要作出相应的改变，比方说**代价敏感（cost-sensitive）**版本的错误率：
 
-$$E(f;D;cost) = \frac{1}{m}\lgroup\sum_{x_i \in D^+}\mathbb{I}(f(x_i) \neq y_i) \times cost_{01} + \sum_{x_i \in D^-}\mathbb{I}(f(x_i) \neq y_i) \times cost_{10}\rgroup$$
+<img src="http://latex.codecogs.com/gif.latex?E(f;D;cost) = \frac{1}{m}  ( \sum_{x_i \in D^+}\mathbb{I}(f(x_i) \neq y_i) \times cost_{01} + \sum_{x_i \in D^-}\mathbb{I}(f(x_i) \neq y_i) \times cost_{10} )" />
 
 由于ROC曲线不能反应使用非均等代价之后的期望总体代价，所以改用**代价曲线（cost curve）**来取替。
 
@@ -195,7 +195,7 @@ $$E(f;D;cost) = \frac{1}{m}\lgroup\sum_{x_i \in D^+}\mathbb{I}(f(x_i) \neq y_i) 
 
 ## 比较检验
 
-看起来似乎有了获取测试集$^{*}$的评估方法和用于比较模型的性能度量之后，就能够通过不同模型在测试集上的性能表现来判断优劣了。但是！事实上，在机器学习中，模型比较并不是这样简单的比大小，而是要考虑更多。
+看起来似乎有了获取测试集<img src="http://latex.codecogs.com/gif.latex?^{*}" /> 的评估方法和用于比较模型的性能度量之后，就能够通过不同模型在测试集上的性能表现来判断优劣了。但是！事实上，在机器学习中，模型比较并不是这样简单的比大小，而是要考虑更多。
 
 注：指验证集，但无论是书中还是论文中，都使用测试集较多，明白两者的区别就可以了。
 
@@ -213,7 +213,7 @@ $$E(f;D;cost) = \frac{1}{m}\lgroup\sum_{x_i \in D^+}\mathbb{I}(f(x_i) \neq y_i) 
 
 - **置信度**：表示有多大的把握认为假设是正确的。
 - **显著度**：也称“显著性水平”，表示假设出错的概率。显著度越大，假设被拒绝的可能性越大。
-- **自由度**：不被限制的样本数，也可以理解为能自由取值的样本数，记为 $v$ 或 $df$。
+- **自由度**：不被限制的样本数，也可以理解为能自由取值的样本数，记为 <img src="http://latex.codecogs.com/gif.latex?v" />  或 <img src="http://latex.codecogs.com/gif.latex?df" /> 。
 
 ### 单个模型、单个数据集上的泛化性能检验
 
@@ -221,49 +221,49 @@ $$E(f;D;cost) = \frac{1}{m}\lgroup\sum_{x_i \in D^+}\mathbb{I}(f(x_i) \neq y_i) 
 
 #### 二项检验
 
-在进行比较检验前，完成了一次模型预测，已知测试错误率为 $\hat{\epsilon}$。
+在进行比较检验前，完成了一次模型预测，已知测试错误率为 <img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}" /> 。
 
-一个泛化错误率为 $\epsilon$ 的模型在 $m$ 个样本上预测错 $m'$ 个样本的概率为：
+一个泛化错误率为 <img src="http://latex.codecogs.com/gif.latex?\epsilon" />  的模型在 <img src="http://latex.codecogs.com/gif.latex?m" />  个样本上预测错 <img src="http://latex.codecogs.com/gif.latex?m'" />  个样本的概率为：
 
-$$ P(\hat{\epsilon};\epsilon) = \binom{m}{m'} \epsilon^{m'} (1-\epsilon)^{m - m'}$$
+<img src="http://latex.codecogs.com/gif.latex? P(\hat{\epsilon};\epsilon) = \binom{m}{m'} \epsilon^{m'} (1-\epsilon)^{m - m'}" />
 
 这个概率符合二项分布:
 
 ![二项分布](http://zy.swust.net.cn/07/1/sytjff/image/3.7a.gif)
 
-又因为已知测试错误率为 $\hat{\epsilon}$，也即知道了该模型在 $m$ 个样本上实际预测错 了$\hat{\epsilon} \times m$ 个样本。代入公式，对 $\epsilon$ 求偏导会发现，给定这些条件时，**$\epsilon = \hat{\epsilon}$ 的概率是最大的**。
+又因为已知测试错误率为 <img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}" /> ，也即知道了该模型在 <img src="http://latex.codecogs.com/gif.latex?m" />  个样本上实际预测错 了<img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon} \times m" />  个样本。代入公式，对 <img src="http://latex.codecogs.com/gif.latex?\epsilon" />  求偏导会发现，给定这些条件时，**<img src="http://latex.codecogs.com/gif.latex?\epsilon = \hat{\epsilon}" />  的概率是最大的**。
 
-使用**二项检验（binomial test）**，假设泛化错误率 $\epsilon \leq \epsilon_0$，并且设定置信度为 $1-\alpha$。则可以这样定义错误率的阈值 $\overline{\epsilon}$：
+使用**二项检验（binomial test）**，假设泛化错误率 <img src="http://latex.codecogs.com/gif.latex?\epsilon \leq \epsilon_0" /> ，并且设定置信度为 <img src="http://latex.codecogs.com/gif.latex?1-\alpha" /> 。则可以这样定义错误率的阈值 <img src="http://latex.codecogs.com/gif.latex?\overline{\epsilon}" /> ：
 
-$$\overline{\epsilon} = \max{\epsilon} \qquad s.t. \qquad \sum_{i=\epsilon_0 \times m+1}^m \binom{m}{i}\epsilon^i (1-\epsilon)^{m-i} < \alpha$$
+<img src="http://latex.codecogs.com/gif.latex?\overline{\epsilon} = \max{\epsilon} \qquad s.t. \qquad \sum_{i=\epsilon_0 \times m+1}^m \binom{m}{i}\epsilon^i (1-\epsilon)^{m-i} < \alpha" />
 
-其中 $s.t.$ 表示左式在右边条件满足时成立。右式计算的是发生不符合假设的事件的总概率，如果我们要有 $1-\alpha$ 的把握认为假设成立，那么发生不符合假设的事件的总概率就必须低过 $\alpha$。
+其中 <img src="http://latex.codecogs.com/gif.latex?s.t." />  表示左式在右边条件满足时成立。右式计算的是发生不符合假设的事件的总概率，如果我们要有 <img src="http://latex.codecogs.com/gif.latex?1-\alpha" />  的把握认为假设成立，那么发生不符合假设的事件的总概率就必须低过 <img src="http://latex.codecogs.com/gif.latex?\alpha" /> 。
 
-在满足右式的所有 $\epsilon$ 中，选择最大的作为阈值 $\overline{\epsilon}$。如果在测试集中观测到的测试错误率 $\hat{\epsilon}$ 是小于阈值 $\overline{\epsilon}$的， 我们就能以$1-\alpha$ 的把握认为假设成立，即该模型的泛化误差 $\epsilon \leq \epsilon_0$。
+在满足右式的所有 <img src="http://latex.codecogs.com/gif.latex?\epsilon" />  中，选择最大的作为阈值 <img src="http://latex.codecogs.com/gif.latex?\overline{\epsilon}" /> 。如果在测试集中观测到的测试错误率 <img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}" />  是小于阈值 <img src="http://latex.codecogs.com/gif.latex?\overline{\epsilon}" /> 的， 我们就能以<img src="http://latex.codecogs.com/gif.latex?1-\alpha" />  的把握认为假设成立，即该模型的泛化误差 <img src="http://latex.codecogs.com/gif.latex?\epsilon \leq \epsilon_0" /> 。
 
 #### t检验
 
-二项检验只用于检验某一次测试的性能度量，但实际任务中我们会进行多次的训练/测试，得到多个测试错误率，比方说进行了k次测试，得到 $\hat{\epsilon}_1$,$\hat{\epsilon}_2$, ... ,$\hat{\epsilon}_k$。这次就会用到**t检验(t-test)**。
+二项检验只用于检验某一次测试的性能度量，但实际任务中我们会进行多次的训练/测试，得到多个测试错误率，比方说进行了k次测试，得到 <img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}_1" /> ,<img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}_2" /> , ... ,<img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}_k" /> 。这次就会用到**t检验(t-test)**。
 
-定义这 $k$ 次测试的平均错误率 $\mu$ 和方差 $\sigma^2$：
+定义这 <img src="http://latex.codecogs.com/gif.latex?k" />  次测试的平均错误率 <img src="http://latex.codecogs.com/gif.latex?\mu" />  和方差 <img src="http://latex.codecogs.com/gif.latex?\sigma^2" /> ：
 
-$$\mu = \frac{1}{k} \sum_{i=1}^k \hat{\epsilon_i}$$
+<img src="http://latex.codecogs.com/gif.latex?\mu = \frac{1}{k} \sum_{i=1}^k \hat{\epsilon_i}" />
 
-$$\sigma^2 = \frac{1}{k-1} \sum_{i=1}^k (\hat{\epsilon_i} - \mu)^2$$
+<img src="http://latex.codecogs.com/gif.latex?\sigma^2 = \frac{1}{k-1} \sum_{i=1}^k (\hat{\epsilon_i} - \mu)^2" />
 
-注意！这里使用的是**无偏估计**的**样本方差**，分母是 $k-1$，因为当均值确定，并且已知 $k-1$ 个样本的值时，第 $k$ 个样本的值是可以算出来的，也可以说是**受限的**。
+注意！这里使用的是**无偏估计**的**样本方差**，分母是 <img src="http://latex.codecogs.com/gif.latex?k-1" /> ，因为当均值确定，并且已知 <img src="http://latex.codecogs.com/gif.latex?k-1" />  个样本的值时，第 <img src="http://latex.codecogs.com/gif.latex?k" />  个样本的值是可以算出来的，也可以说是**受限的**。
 
-假设泛化错误率 $\epsilon = \epsilon_0$，并且设定显著度为 $\alpha$。计算统计量t：
+假设泛化错误率 <img src="http://latex.codecogs.com/gif.latex?\epsilon = \epsilon_0" /> ，并且设定显著度为 <img src="http://latex.codecogs.com/gif.latex?\alpha" /> 。计算统计量t：
 
-$$t = \frac{\sqrt{k}(\mu-\epsilon_0)}{\sigma}$$
+<img src="http://latex.codecogs.com/gif.latex?t = \frac{\sqrt{k}(\mu-\epsilon_0)}{\sigma}" />
 
-该统计量服从自由度 $v = k-1$ 的t分布，如下图：
+该统计量服从自由度 <img src="http://latex.codecogs.com/gif.latex?v = k-1" />  的t分布，如下图：
 
 ![t分布](https://staff.aist.go.jp/t.ihara/t.files/image076.jpg)
 
-自由度越大，约接近于正态分布，自由度为无穷大时变为标准正态分布（$\mu=0$，$\sigma=1$）。
+自由度越大，约接近于正态分布，自由度为无穷大时变为标准正态分布（<img src="http://latex.codecogs.com/gif.latex?\mu=0" /> ，<img src="http://latex.codecogs.com/gif.latex?\sigma=1" /> ）。
 
-如果计算出的t统计量落在临界值范围 [$t_{-a/2}$,$t_{a/2}$] 之内（注：临界值由自由度 $k$ 和显著度 $\alpha$ 决定，通过查表得出），我们就能以$1-\alpha$ 的把握认为假设成立，即该模型的泛化误差 $\epsilon = \epsilon_0$。
+如果计算出的t统计量落在临界值范围 [<img src="http://latex.codecogs.com/gif.latex?t_{-a/2}" /> ,<img src="http://latex.codecogs.com/gif.latex?t_{a/2}" /> ] 之内（注：临界值由自由度 <img src="http://latex.codecogs.com/gif.latex?k" />  和显著度 <img src="http://latex.codecogs.com/gif.latex?\alpha" />  决定，通过查表得出），我们就能以<img src="http://latex.codecogs.com/gif.latex?1-\alpha" />  的把握认为假设成立，即该模型的泛化误差 <img src="http://latex.codecogs.com/gif.latex?\epsilon = \epsilon_0" /> 。
 
 ### 两个模型/算法、单个数据集上的泛化性能检验
 
@@ -271,15 +271,15 @@ $$t = \frac{\sqrt{k}(\mu-\epsilon_0)}{\sigma}$$
 
 #### 交叉验证t检验
 
-对两个模型A和B，各使用k折交叉验证分别得到k个测试错误率，即$\hat{\epsilon}_1^A$,$\hat{\epsilon}_2^A$, ... ,$\hat{\epsilon}_k^A$ 和 $\hat{\epsilon}_1^B$,$\hat{\epsilon}_2^B$, ... ,$\hat{\epsilon}_k^B$。使用**k折交叉验证成对t检验（paired t-tests）**来进行比较检验。
+对两个模型A和B，各使用k折交叉验证分别得到k个测试错误率，即<img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}_1^A" /> ,<img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}_2^A" /> , ... ,<img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}_k^A" />  和 <img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}_1^B" /> ,<img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}_2^B" /> , ... ,<img src="http://latex.codecogs.com/gif.latex?\hat{\epsilon}_k^B" /> 。使用**k折交叉验证成对t检验（paired t-tests）**来进行比较检验。
 
-对于这两组k个测试错误率，计算两组之间的每一对的差，即 $\triangle_i = \hat{\epsilon}_k^A - \hat{\epsilon}_k^B$，从而得到k个 $\triangle$。我们可以计算 $\triangle$ 的均值 $\mu$ 和方差 $\sigma^2$，定义统计量t：
+对于这两组k个测试错误率，计算两组之间的每一对的差，即 <img src="http://latex.codecogs.com/gif.latex?\triangle_i = \hat{\epsilon}_k^A - \hat{\epsilon}_k^B" /> ，从而得到k个 <img src="http://latex.codecogs.com/gif.latex?\triangle" /> 。我们可以计算 <img src="http://latex.codecogs.com/gif.latex?\triangle" />  的均值 <img src="http://latex.codecogs.com/gif.latex?\mu" />  和方差 <img src="http://latex.codecogs.com/gif.latex?\sigma^2" /> ，定义统计量t：
 
-$$t = \lvert \frac{\sqrt{k}\mu}{\sigma} \rvert$$
+<img src="http://latex.codecogs.com/gif.latex?t = \lvert \frac{\sqrt{k}\mu}{\sigma} \rvert" />
 
-可以看到，和前面的t检验相比，这里的分子没有被减项，其实是省略了。因为我们假设两个模型的泛化错误率相同，实际上是假设 $\lvert \epsilon^A - \epsilon^B \rvert = 0$，这个 $0$ 被省略了。
+可以看到，和前面的t检验相比，这里的分子没有被减项，其实是省略了。因为我们假设两个模型的泛化错误率相同，实际上是假设 <img src="http://latex.codecogs.com/gif.latex?\lvert \epsilon^A - \epsilon^B \rvert = 0" /> ，这个 <img src="http://latex.codecogs.com/gif.latex?0" />  被省略了。
 
-类似地，这个统计量服从自由度 $v = k-1$ 的t分布。我们设定好显著度 $\alpha$，查表获取临界值范围，如果计算出的t统计量落在在范围内，就能以$1-\alpha$ 的把握认为假设成立，即两个模型的泛化性能无显著差别，否则认为平均测试错误率较低的模型更胜一筹。
+类似地，这个统计量服从自由度 <img src="http://latex.codecogs.com/gif.latex?v = k-1" />  的t分布。我们设定好显著度 <img src="http://latex.codecogs.com/gif.latex?\alpha" /> ，查表获取临界值范围，如果计算出的t统计量落在在范围内，就能以<img src="http://latex.codecogs.com/gif.latex?1-\alpha" />  的把握认为假设成立，即两个模型的泛化性能无显著差别，否则认为平均测试错误率较低的模型更胜一筹。
 
 #### McNemar检验
 
@@ -298,23 +298,23 @@ $$t = \lvert \frac{\sqrt{k}\mu}{\sigma} \rvert$$
 </tr>
 <tr>
     <td align="center">分类正确</td>
-    <td align="center">$e_{00}$</td>
-    <td align="center">$e_{01}$</td>
+    <td align="center"><img src="http://latex.codecogs.com/gif.latex?e_{00}" /> </td>
+    <td align="center"><img src="http://latex.codecogs.com/gif.latex?e_{01}" /> </td>
 </tr>
 <tr>
     <td align="center">分类错误</td>
-    <td align="center">$e_{10}$</td>
-    <td align="center">$e_{11}$</td>
+    <td align="center"><img src="http://latex.codecogs.com/gif.latex?e_{10}" /> </td>
+    <td align="center"><img src="http://latex.codecogs.com/gif.latex?e_{11}" /> </td>
 </tr>
 </table>
 
-假设两个算法的泛化性能无显著区别，则 $e_{01}$ 应该等于 $e_{10}$，变量 $\lvert e_{01}-e_{10} \rvert$ 应服从均值为 $1$，方差为 $e_{01} + e_{10}$ 的正态分布，可以计算统计量 $\chi^2$：
+假设两个算法的泛化性能无显著区别，则 <img src="http://latex.codecogs.com/gif.latex?e_{01}" />  应该等于 <img src="http://latex.codecogs.com/gif.latex?e_{10}" /> ，变量 <img src="http://latex.codecogs.com/gif.latex?\lvert e_{01}-e_{10} \rvert" />  应服从均值为 <img src="http://latex.codecogs.com/gif.latex?1" /> ，方差为 <img src="http://latex.codecogs.com/gif.latex?e_{01} + e_{10}" />  的正态分布，可以计算统计量 <img src="http://latex.codecogs.com/gif.latex?\chi^2" /> ：
 
-$$\chi^2 = \frac{(\lvert e_{01}-e_{10} \rvert -1)^2}{e_{01} + e_{10}}$$
+<img src="http://latex.codecogs.com/gif.latex?\chi^2 = \frac{(\lvert e_{01}-e_{10} \rvert -1)^2}{e_{01} + e_{10}}" />
 
-该变量服从自由度为 $v=1$ 的 $\chi^2$ 分布（卡方分布），类似t检验，设定好显著度 $\alpha$，按照自由度和显著度查表获得临界值。若计算所得的统计量 $\chi^2$ 小于临界值，则能以$1-\alpha$ 的把握认为假设成立，即两个算法的泛化性能无显著差别，否则认为平均测试错误率较低的算法更胜一筹。
+该变量服从自由度为 <img src="http://latex.codecogs.com/gif.latex?v=1" />  的 <img src="http://latex.codecogs.com/gif.latex?\chi^2" />  分布（卡方分布），类似t检验，设定好显著度 <img src="http://latex.codecogs.com/gif.latex?\alpha" /> ，按照自由度和显著度查表获得临界值。若计算所得的统计量 <img src="http://latex.codecogs.com/gif.latex?\chi^2" />  小于临界值，则能以<img src="http://latex.codecogs.com/gif.latex?1-\alpha" />  的把握认为假设成立，即两个算法的泛化性能无显著差别，否则认为平均测试错误率较低的算法更胜一筹。
 
-注：这里 $v$ 为1是因为只有2个算法
+注：这里 <img src="http://latex.codecogs.com/gif.latex?v" />  为1是因为只有2个算法
 
 ### 多个模型/算法、多个数据集上的泛化性能检验
 
@@ -324,7 +324,7 @@ $$\chi^2 = \frac{(\lvert e_{01}-e_{10} \rvert -1)^2}{e_{01} + e_{10}}$$
 
 #### Friedman检验
 
-假设有 $N=4$ 个数据集，$k=3$ 种算法，可以使用一种评估方法，获得各个算法在各个数据集上的测试结果，然后按照性能度量由好到坏进行排序，序值为1，2，3。若并列，则取序值的平均值。然后对各个算法在各数据集上的序值求平均得到平均序值，如：
+假设有 <img src="http://latex.codecogs.com/gif.latex?N=4" />  个数据集，<img src="http://latex.codecogs.com/gif.latex?k=3" />  种算法，可以使用一种评估方法，获得各个算法在各个数据集上的测试结果，然后按照性能度量由好到坏进行排序，序值为1，2，3。若并列，则取序值的平均值。然后对各个算法在各数据集上的序值求平均得到平均序值，如：
 
 | 数据集 | 算法A | 算法B | 算法C |
 |:-:|:-:|:-:|:-:|
@@ -334,19 +334,19 @@ $$\chi^2 = \frac{(\lvert e_{01}-e_{10} \rvert -1)^2}{e_{01} + e_{10}}$$
 |D4|1|2|3|
 |平均序值|1|2.125|2.875|
 
-令 $r_i$ 表示第 $i$ 个算法的平均序值，则 $r_i$ 服从均值为 $\frac{k+1}{2}$，方差为 $\frac{(k^2)-1}{12}$ 的正态分布。可以计算统计量 $\chi^2$：
+令 <img src="http://latex.codecogs.com/gif.latex?r_i" />  表示第 <img src="http://latex.codecogs.com/gif.latex?i" />  个算法的平均序值，则 <img src="http://latex.codecogs.com/gif.latex?r_i" />  服从均值为 <img src="http://latex.codecogs.com/gif.latex?\frac{k+1}{2}" /> ，方差为 <img src="http://latex.codecogs.com/gif.latex?\frac{(k^2)-1}{12}" />  的正态分布。可以计算统计量 <img src="http://latex.codecogs.com/gif.latex?\chi^2" /> ：
 
-$$\chi^2 = \frac{12N}{k(k+1)}(\sum_{i=1}^k r_i^2 - \frac{k(k+1)^2}{4})$$
+<img src="http://latex.codecogs.com/gif.latex?\chi^2 = \frac{12N}{k(k+1)}(\sum_{i=1}^k r_i^2 - \frac{k(k+1)^2}{4})" />
 
-在 $k$ 和 $N$ 都较大时(通常要求 $k>30$)，该变量服从自由度为 $v=k-1$ 的 $\chi^2$ 分布（卡方分布）。
+在 <img src="http://latex.codecogs.com/gif.latex?k" />  和 <img src="http://latex.codecogs.com/gif.latex?N" />  都较大时(通常要求 <img src="http://latex.codecogs.com/gif.latex?k>30" /> )，该变量服从自由度为 <img src="http://latex.codecogs.com/gif.latex?v=k-1" />  的 <img src="http://latex.codecogs.com/gif.latex?\chi^2" />  分布（卡方分布）。
 
-以上这种检验方式也称为**原始Friedman检验**，被认为过于保守，现在通常用统计量 $F$ 代替：
+以上这种检验方式也称为**原始Friedman检验**，被认为过于保守，现在通常用统计量 <img src="http://latex.codecogs.com/gif.latex?F" />  代替：
 
-$$F = \frac{(N-1)\chi^2}{N(k-1)-\chi^2}$$
+<img src="http://latex.codecogs.com/gif.latex?F = \frac{(N-1)\chi^2}{N(k-1)-\chi^2}" />
 
-该变量服从于自由度为 $v=k-1$ 或 $v=(k-1)(N-1)$ 的 $F$ 分布。
+该变量服从于自由度为 <img src="http://latex.codecogs.com/gif.latex?v=k-1" />  或 <img src="http://latex.codecogs.com/gif.latex?v=(k-1)(N-1)" />  的 <img src="http://latex.codecogs.com/gif.latex?F" />  分布。
 
-和前面的检验方式有所区别，F检验是根据设定的显著度 $\alpha$ 和**算法个数** $k$ 以及 **数据集个数**$N$ 这三者来查表的，如果计算出的统计量 $F$ 小于查表所得的临界值，则假设成立，能以$1-\alpha$ 的把握认为认为这 $k$ 个算法的泛化性能无显著区别。
+和前面的检验方式有所区别，F检验是根据设定的显著度 <img src="http://latex.codecogs.com/gif.latex?\alpha" />  和**算法个数** <img src="http://latex.codecogs.com/gif.latex?k" />  以及 **数据集个数**<img src="http://latex.codecogs.com/gif.latex?N" />  这三者来查表的，如果计算出的统计量 <img src="http://latex.codecogs.com/gif.latex?F" />  小于查表所得的临界值，则假设成立，能以<img src="http://latex.codecogs.com/gif.latex?1-\alpha" />  的把握认为认为这 <img src="http://latex.codecogs.com/gif.latex?k" />  个算法的泛化性能无显著区别。
 
 但如果这个假设被拒绝了呢？这时就需要进行**后续检验（post-hoc test）**，常用的有 **Nemenyi后续检验**。
 
@@ -354,11 +354,11 @@ $$F = \frac{(N-1)\chi^2}{N(k-1)-\chi^2}$$
 
 定义**平均序值差别的临界值域**为：
 
-$$CD = q_\alpha \sqrt{\frac{k(k+1)}{6N}}$$
+<img src="http://latex.codecogs.com/gif.latex?CD = q_\alpha \sqrt{\frac{k(k+1)}{6N}}" />
 
-其中 $q_\alpha$是由 显著度 $\alpha$ 和**算法个数** $k$ 确定的，通过查表获取。若两个算法的平均序值之差不超过 $CD$，则能以$1-\alpha$ 的把握认为这两个算法的泛化性能无显著区别，否则认为平均序值较小的更胜一筹。
+其中 <img src="http://latex.codecogs.com/gif.latex?q_\alpha" /> 是由 显著度 <img src="http://latex.codecogs.com/gif.latex?\alpha" />  和**算法个数** <img src="http://latex.codecogs.com/gif.latex?k" />  确定的，通过查表获取。若两个算法的平均序值之差不超过 <img src="http://latex.codecogs.com/gif.latex?CD" /> ，则能以<img src="http://latex.codecogs.com/gif.latex?1-\alpha" />  的把握认为这两个算法的泛化性能无显著区别，否则认为平均序值较小的更胜一筹。
 
-Nemenyi后续检验还可以通过Friedman检验图更直观地体现出来，横轴为性能度量，纵轴为算法，每个算法用一段水平线段表示，线段中心点为该算法的平均序值，线段长度为 $CD$。若两个算法的线段投影到x轴上有重叠部分，则可以认为这两个算法的泛化性能无显著区别。
+Nemenyi后续检验还可以通过Friedman检验图更直观地体现出来，横轴为性能度量，纵轴为算法，每个算法用一段水平线段表示，线段中心点为该算法的平均序值，线段长度为 <img src="http://latex.codecogs.com/gif.latex?CD" /> 。若两个算法的线段投影到x轴上有重叠部分，则可以认为这两个算法的泛化性能无显著区别。
 
 ## 偏差与方差
 
@@ -368,11 +368,11 @@ Nemenyi后续检验还可以通过Friedman检验图更直观地体现出来，�
 
 对学习算法的期望繁华错误率进行拆解，最终会发现能拆解为三个项（需要推导）：
 
-$$E(f;D) = \mathbb{E}_D[(f(x;D) - \overline{f}(x))^2] + (\overline{f}(x) - y)^2 + \mathbb{E}_D[(y_D - y)^2]$$
+<img src="http://latex.codecogs.com/gif.latex?E(f;D) = \mathbb{E}_D[(f(x;D) - \overline{f}(x))^2] + (\overline{f}(x) - y)^2 + \mathbb{E}_D[(y_D - y)^2]" />
 
 依次对应于**方差（variance）**、**偏差（bias）**、**噪声（noise）**：
 
-$$E(f;D) = var(x) + bias^2(x) + \epsilon^2$$
+<img src="http://latex.codecogs.com/gif.latex?E(f;D) = var(x) + bias^2(x) + \epsilon^2" />
 
 这三者的含义是这样的：
 
@@ -398,13 +398,13 @@ $$E(f;D) = var(x) + bias^2(x) + \epsilon^2$$
 
 有多少种划分方式是一个排列组合问题，等于从500个正例中挑选出300个的所有可能组合乘上从500个正例中挑选出300个的所有可能组合：
 
-$$\binom{500}{350} \times \binom{500}{350} = \binom{500}{150} \times \binom{500}{150} $$
+<img src="http://latex.codecogs.com/gif.latex?\binom{500}{350} \times \binom{500}{350} = \binom{500}{150} \times \binom{500}{150} " />
 
 #### 2.2
 
 > 问：数据集包含100个样本，其中正反例各一半，假定学习算法所产生的模型是将新样本预测为训练样本数较多的类别（训练样本数相同时进行随机猜测），试给出用10折交叉验证法和留一法分别对错误率进行评估所得的结果。
 
-（1）10折交叉验证法：通过分层采样获得10个互斥子集，每个子集包含10个样本，正反例各5个。每次取其中9个子集做训练，1个子集做测试。因为在训练集中两个类别数目相当（都为 $9*5=45$ 个），所以只能进行随机猜测，错误率为50%。
+（1）10折交叉验证法：通过分层采样获得10个互斥子集，每个子集包含10个样本，正反例各5个。每次取其中9个子集做训练，1个子集做测试。因为在训练集中两个类别数目相当（都为 <img src="http://latex.codecogs.com/gif.latex?9*5=45" />  个），所以只能进行随机猜测，错误率为50%。
 
 （2）留一法：每次取一个样本做测试，若取出的样本为正例，那么剩下的训练集中有50个反例，49个正例，因此预测结果为反例，反之亦然。故错误率为100%。
 
@@ -414,11 +414,11 @@ $$\binom{500}{350} \times \binom{500}{350} = \binom{500}{150} \times \binom{500}
 
 模型A的F1值高于模型B的F1值也即：
 
-$$F1_A > F1_B \Leftrightarrow \frac{2 \times precision_A \times recall_A}{presion_A + recall_A} > \frac{2 \times precision_B \times recall_B}{presion_B + recall_B}$$
+<img src="http://latex.codecogs.com/gif.latex?F1_A > F1_B \Leftrightarrow \frac{2 \times precision_A \times recall_A}{presion_A + recall_A} > \frac{2 \times precision_B \times recall_B}{presion_B + recall_B}" />
 
-BEP是查准率precision与查全率recall相等时的取值，令式中的 $precision_A = recall_A = BEQ_A$，$precision_B = recall_B = BEQ_B$，因此有：
+BEP是查准率precision与查全率recall相等时的取值，令式中的 <img src="http://latex.codecogs.com/gif.latex?precision_A = recall_A = BEQ_A" /> ，<img src="http://latex.codecogs.com/gif.latex?precision_B = recall_B = BEQ_B" /> ，因此有：
 
-$$\frac{2 \times BEQ_A^2}{2 \times BEQ_A} > \frac{2 \times BEQ_B^2}{2 \times BEQ_B} \Rightarrow BEQ_A > BEQ_B$$
+<img src="http://latex.codecogs.com/gif.latex?\frac{2 \times BEQ_A^2}{2 \times BEQ_A} > \frac{2 \times BEQ_B^2}{2 \times BEQ_B} \Rightarrow BEQ_A > BEQ_B" />
 
 得证，若学习器A的F1值比学习器B高，则A的BEP值也比B高。
 
@@ -442,36 +442,36 @@ $$\frac{2 \times BEQ_A^2}{2 \times BEQ_A} > \frac{2 \times BEQ_B^2}{2 \times BEQ
 
 #### 2.5
 
-> 问：试证明 $AUC=1-\ell_{rank}$
+> 问：试证明 <img src="http://latex.codecogs.com/gif.latex?AUC=1-\ell_{rank}" />
 
 先回顾一下AUC的计算方法：
 
-$$AUC=\frac{1}{2}\sum_{i=1}^{m-1}(x_{i+1}-x_i)\cdot(y_i+y_{i+1})$$
+<img src="http://latex.codecogs.com/gif.latex?AUC=\frac{1}{2}\sum_{i=1}^{m-1}(x_{i+1}-x_i)\cdot(y_i+y_{i+1})" />
 
-计算方法类似于积分，把ROC曲线下的面积分解为m（样本个数）个小矩形，然后对这些小矩阵的面积求和。每个矩形的宽等于相邻的两个点横坐标的差值，每个矩形的高等于相邻两个点纵坐标之和的 $\frac{1}{2}$。上式把常数 $\frac{1}{2}$ 提到求和项外了。
+计算方法类似于积分，把ROC曲线下的面积分解为m（样本个数）个小矩形，然后对这些小矩阵的面积求和。每个矩形的宽等于相邻的两个点横坐标的差值，每个矩形的高等于相邻两个点纵坐标之和的 <img src="http://latex.codecogs.com/gif.latex?\frac{1}{2}" /> 。上式把常数 <img src="http://latex.codecogs.com/gif.latex?\frac{1}{2}" />  提到求和项外了。
 
 再看看排序损失（指按算法预测值排序时带来的损失）：
 
-$$\ell_{rank} = \frac{1}{m^+ \cdot m^-} \sum_{x^+ \in D^+}\sum_{x^- \in D^-} (\mathbb{I}(f(x^+) < f(x^-)) + \frac{1}{2}\mathbb{I}(f(x^+) = f(x^-)))$$
+<img src="http://latex.codecogs.com/gif.latex?\ell_{rank} = \frac{1}{m^+ \cdot m^-} \sum_{x^+ \in D^+}\sum_{x^- \in D^-} (\mathbb{I}(f(x^+) < f(x^-)) + \frac{1}{2}\mathbb{I}(f(x^+) = f(x^-)))" />
 
-其中 $m^+$ 和 $m^-$ 分别表示测试集中的正例集和反例集。
+其中 <img src="http://latex.codecogs.com/gif.latex?m^+" />  和 <img src="http://latex.codecogs.com/gif.latex?m^-" />  分别表示测试集中的正例集和反例集。
 
 这题目前还没有头绪，AUC曲线上的面积是：
 
-$$\frac{1}{2}\sum_{i=1}^{m-1}(x_{i+1}-x_i)\cdot((1-y_i)+(1-y_{i+1})) \\
-= -\frac{1}{2}\sum_{i=1}^{m-1}(x_{i+1}-x_i)\cdot(y_i+y_{i+1}-2)$$
+<img src="http://latex.codecogs.com/gif.latex?\frac{1}{2}\sum_{i=1}^{m-1}(x_{i+1}-x_i)\cdot((1-y_i)+(1-y_{i+1})) \\
+= -\frac{1}{2}\sum_{i=1}^{m-1}(x_{i+1}-x_i)\cdot(y_i+y_{i+1}-2)" />
 
-怎么证明这个表达式和 $\ell_{rank}$ 相等呢？
+怎么证明这个表达式和 <img src="http://latex.codecogs.com/gif.latex?\ell_{rank}" />  相等呢？
 
 #### 2.6
 
 > 问：试述错误率与ROC曲线之间的关系
 
-错误率 $\epsilon$：
+错误率 <img src="http://latex.codecogs.com/gif.latex?\epsilon" /> ：
 
-$$\epsilon = \frac{FP + FN}{m}$$
+<img src="http://latex.codecogs.com/gif.latex?\epsilon = \frac{FP + FN}{m}" />
 
-其中 $m$ 为样本总数， $FP$ 为假正例个数， $FN$ 为假反例个数。因为给定测试集，正例反例的数目是固定的。当我们以ROC曲线上的一个点作为阈值划分预测的正例和反例时，该点的真正例率（y轴）越高，那么假反例就会越少；该点的假正例率（x轴）越低，那么假正例就越少，从而使得错误率越低。归纳起来就是，在ROC曲线上距离左上角 (0,1) 点越近的点错误率越低。
+其中 <img src="http://latex.codecogs.com/gif.latex?m" />  为样本总数， <img src="http://latex.codecogs.com/gif.latex?FP" />  为假正例个数， <img src="http://latex.codecogs.com/gif.latex?FN" />  为假反例个数。因为给定测试集，正例反例的数目是固定的。当我们以ROC曲线上的一个点作为阈值划分预测的正例和反例时，该点的真正例率（y轴）越高，那么假反例就会越少；该点的假正例率（x轴）越低，那么假正例就越少，从而使得错误率越低。归纳起来就是，在ROC曲线上距离左上角 (0,1) 点越近的点错误率越低。
 
 
 #### 2.7
@@ -483,19 +483,19 @@ $$\epsilon = \frac{FP + FN}{m}$$
 
 #### 2.8
 
-> 问：$Min-Max$ 规范化和 $z-score$ 规范化是两种常用的规范化方法。令 $x$ 和 $x'$ 分别表示变量在规范化前后的取值，相应的，令 $x_{min}$ 和 $x_{max}$ 表示规范化前的最小值和最大值， $x_{min}'$ 和 $x_{max}'$ 表示规范化后的最小值和最大值，$\bar{x}$ 和 $\sigma_x$ 分别表示规范化前的均值和标准差。试析二者的优缺点。
+> 问：<img src="http://latex.codecogs.com/gif.latex?Min-Max" />  规范化和 <img src="http://latex.codecogs.com/gif.latex?z-score" />  规范化是两种常用的规范化方法。令 <img src="http://latex.codecogs.com/gif.latex?x" />  和 <img src="http://latex.codecogs.com/gif.latex?x'" />  分别表示变量在规范化前后的取值，相应的，令 <img src="http://latex.codecogs.com/gif.latex?x_{min}" />  和 <img src="http://latex.codecogs.com/gif.latex?x_{max}" />  表示规范化前的最小值和最大值， <img src="http://latex.codecogs.com/gif.latex?x_{min}'" />  和 <img src="http://latex.codecogs.com/gif.latex?x_{max}'" />  表示规范化后的最小值和最大值，<img src="http://latex.codecogs.com/gif.latex?\bar{x}" />  和 <img src="http://latex.codecogs.com/gif.latex?\sigma_x" />  分别表示规范化前的均值和标准差。试析二者的优缺点。
 
-$Min-Max$ 规范化：
+<img src="http://latex.codecogs.com/gif.latex?Min-Max" />  规范化：
 
-$$x' = x_{min}' + \frac{x-x_{min}}{x_{max}-x_{min}} \times (x_{max}' - x_{min}')$$
+<img src="http://latex.codecogs.com/gif.latex?x' = x_{min}' + \frac{x-x_{min}}{x_{max}-x_{min}} \times (x_{max}' - x_{min}')" />
 
-$z-score$ 规范化：
+<img src="http://latex.codecogs.com/gif.latex?z-score" />  规范化：
 
-$$x' = \frac{x - \bar{x}}{\sigma_x}$$
+<img src="http://latex.codecogs.com/gif.latex?x' = \frac{x - \bar{x}}{\sigma_x}" />
 
-$Min-Max$ 规范化比较简单，缺点在于当有新数据输入时，可能导致max和min的变化，需要重新定义。
+<img src="http://latex.codecogs.com/gif.latex?Min-Max" />  规范化比较简单，缺点在于当有新数据输入时，可能导致max和min的变化，需要重新定义。
 
-$z-score$ 规范化能把数据的原分布转换为标准正态分布，即均值为0，标准差为1，对于某些任务可能会有帮助。比如分类时，规范化后取值靠近-1的认为是负类，取值靠近1的认为是正类。注意！它并非是把数据映射到 [-1,1] 区间，会有超出的部分（回想正态分布曲线两段的延伸段），实际处理时一般把超出部分都修改为-1和1以满足映射到区间内的要求。这种规范化的缺点就是改变了数据的分布，这可能会引入某种误差。
+<img src="http://latex.codecogs.com/gif.latex?z-score" />  规范化能把数据的原分布转换为标准正态分布，即均值为0，标准差为1，对于某些任务可能会有帮助。比如分类时，规范化后取值靠近-1的认为是负类，取值靠近1的认为是正类。注意！它并非是把数据映射到 [-1,1] 区间，会有超出的部分（回想正态分布曲线两段的延伸段），实际处理时一般把超出部分都修改为-1和1以满足映射到区间内的要求。这种规范化的缺点就是改变了数据的分布，这可能会引入某种误差。
 
 #### 2.9
 

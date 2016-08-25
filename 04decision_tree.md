@@ -32,11 +32,11 @@
 
 1. 传入训练集和属性集
 2. 生成一个新节点
-3. 若此时数据集中所有样本都属于同一类，则把新节点设置为该类的叶节点，然后**返回**$^1$。
-4. 若此时属性集为空，或者数据集中所有样本在属性集余下的所有属性上取值都相同，无法进一步划分，则把新节点设置为叶节点，类标记为数据集中样本数最多的类，然后**返回**$^2$
+3. 若此时数据集中所有样本都属于同一类，则把新节点设置为该类的叶节点，然后**返回**<img src="http://latex.codecogs.com/gif.latex?^1" /> 。
+4. 若此时属性集为空，或者数据集中所有样本在属性集余下的所有属性上取值都相同，无法进一步划分，则把新节点设置为叶节点，类标记为数据集中样本数最多的类，然后**返回**<img src="http://latex.codecogs.com/gif.latex?^2" />
 5. 从属性集中选择一个最优划分属性
     - 为该属性的每个属性值生成一个分支，并按属性值划分出子数据集
-    - 若分支对应的子数据集为空，无法进一步划分，则直接把子节点设置为叶节点，类标记为父节点数据集中样本数最多的类，然后**返回**$^3$
+    - 若分支对应的子数据集为空，无法进一步划分，则直接把子节点设置为叶节点，类标记为父节点数据集中样本数最多的类，然后**返回**<img src="http://latex.codecogs.com/gif.latex?^3" />
     - 将子数据集和去掉了划分属性的子属性集作为算法的传入参数，继续生成该分支的子决策树。
 
 稍微注意以下，3处返回中的第2处和第3处设置叶节点的类标记原理有所不同。第2处将类标记设置为当前节点对应为数据集中样本数最多的类，这是利用当前节点的**后验分布**；第3处将类标记设置为为父节点数据集中样本数最多的类，这是把父节点的样本分布作为当前节点的**先验分布**。
@@ -47,9 +47,9 @@
 
 **信息熵（information entropy）**是一种衡量样本集纯度的常用指标：
 
-$$Ent(D) = -\sum_{k=1}^{|\mathcal{Y}|}p_klog_2p_k$$
+<img src="http://latex.codecogs.com/gif.latex?Ent(D) = -\sum_{k=1}^{|\mathcal{Y}|}p_klog_2p_k" />
 
-**一定要记得最前面的负号！！！**其中 $|\mathcal{Y}|$ 为类别集合，$p_k$ 为该类样本占样本总数的比例。
+**一定要记得最前面的负号！！！**其中 <img src="http://latex.codecogs.com/gif.latex?|\mathcal{Y}|" />  为类别集合，<img src="http://latex.codecogs.com/gif.latex?p_k" />  为该类样本占样本总数的比例。
 
 **信息熵越大，表示样本集的混乱程度越高，纯度越低**。
 
@@ -57,9 +57,9 @@ $$Ent(D) = -\sum_{k=1}^{|\mathcal{Y}|}p_klog_2p_k$$
 
 **信息增益（information gain）**是**ID3算法**采用的选择准则，定义如下：
 
-$$Gain(D,a) = Ent(D) - \sum_{v=1}^{V}\frac{|D^v|}{|D|}Ent(D^v)$$
+<img src="http://latex.codecogs.com/gif.latex?Gain(D,a) = Ent(D) - \sum_{v=1}^{V}\frac{|D^v|}{|D|}Ent(D^v)" />
 
-它描述的是按某种属性划分后纯度的提升，**信息增益越大，代表用属性 $a$ 进行划分所获得的纯度提升越大**。其中 $V$ 表示属性 $a$ 的属性值集合，$D^v$ 表示属性值为 $v$ 的数据子集。求和项也称为**条件熵**，我们可以理解为它是先求出每个数据子集的信息熵，然后按每个数据子集占原数据集的比例来赋予权重，比例越大，对提升纯度的帮助就越大。
+它描述的是按某种属性划分后纯度的提升，**信息增益越大，代表用属性 <img src="http://latex.codecogs.com/gif.latex?a" />  进行划分所获得的纯度提升越大**。其中 <img src="http://latex.codecogs.com/gif.latex?V" />  表示属性 <img src="http://latex.codecogs.com/gif.latex?a" />  的属性值集合，<img src="http://latex.codecogs.com/gif.latex?D^v" />  表示属性值为 <img src="http://latex.codecogs.com/gif.latex?v" />  的数据子集。求和项也称为**条件熵**，我们可以理解为它是先求出每个数据子集的信息熵，然后按每个数据子集占原数据集的比例来赋予权重，比例越大，对提升纯度的帮助就越大。
 
 多个属性都取得最大的信息增益时，任选一个即可。
 
@@ -74,11 +74,11 @@ $$Gain(D,a) = Ent(D) - \sum_{v=1}^{V}\frac{|D^v|}{|D|}Ent(D^v)$$
 
 **增益率（gain ratio）**是**C4.5算法**采用的选择准则，定义如下：
 
-$$Gain\_ratio(D,a) = \frac{Gain(D,a)}{IV(a)}$$
+<img src="http://latex.codecogs.com/gif.latex?Gain\_ratio(D,a) = \frac{Gain(D,a)}{IV(a)}" />
 
 其中，
 
-$$IV(a) = -\sum_{v=1}^V\frac{|D^v|}{|D|}log_2\frac{|D^v|}{|D|}$$
+<img src="http://latex.codecogs.com/gif.latex?IV(a) = -\sum_{v=1}^V\frac{|D^v|}{|D|}log_2\frac{|D^v|}{|D|}" />
 
 **一定要记得最前面的负号！！！**IV称为属性的**固有值（intrinsic value）**，它的定义和信息熵是类似的，信息熵衡量的是样本集在类别上的混乱程度，而**固有值衡量的是样本集在某个属性上的混乱程度。固有值越大，则该属性混乱程度越高，可能的取值越多**。
 
@@ -92,18 +92,18 @@ $$IV(a) = -\sum_{v=1}^V\frac{|D^v|}{|D|}log_2\frac{|D^v|}{|D|}$$
 
 基尼值：
 
-$$Gini(D) = \sum_{k=1}^{|\mathcal{Y}|}\sum_{k' \neq k}p_kp_{k'}\\
-=1-\sum_{k=1}^{|\mathcal{Y}|}p_k^2$$
+<img src="http://latex.codecogs.com/gif.latex?Gini(D) = \sum_{k=1}^{|\mathcal{Y}|}\sum_{k' \neq k}p_kp_{k'}\\
+=1-\sum_{k=1}^{|\mathcal{Y}|}p_k^2" />
 
 基尼指数：
 
-$$Gini\_index(D,a) = \sum_{v=1}^{V}\frac{|D^v|}{|D|}Gini(D^v)$$
+<img src="http://latex.codecogs.com/gif.latex?Gini\_index(D,a) = \sum_{v=1}^{V}\frac{|D^v|}{|D|}Gini(D^v)" />
 
 基尼值是另一种衡量样本集纯度的指标。反映的是**从一个数据集中随机抽取两个样本，其类别标志不同的概率**。
 
 **基尼值越小，样本集的纯度越高**。
 
-由基尼值引伸开来的就是基尼指数这种准则了，**基尼指数越小，表示使用属性 $a$ 划分后纯度的提升越大**。
+由基尼值引伸开来的就是基尼指数这种准则了，**基尼指数越小，表示使用属性 <img src="http://latex.codecogs.com/gif.latex?a" />  划分后纯度的提升越大**。
 
 ## 剪枝处理
 
@@ -133,11 +133,11 @@ $$Gini\_index(D,a) = \sum_{v=1}^{V}\frac{|D^v|}{|D|}Gini(D^v)$$
 
 前面线性模型已经谈到了离散属性连续化，而决策树模型需要的则是**连续属性离散化**，因为决策树**每次判定只能做有限次划分**。最简单的一种离散化策略是C4.5算法采用的**二分法（bi-partition）**。
 
-给定一个包含连续属性 $a$ 的数据集，并且 $a$ 在数据集中有 $n$ 个不同取值，我们先把属性 $a$ 的 $n$ 个属性值**从小到大进行排序**。**所谓“二分”是指将这些属性值分为两个类别**（比方说把身高这一属性分为高于170和低于170两个类别）。
+给定一个包含连续属性 <img src="http://latex.codecogs.com/gif.latex?a" />  的数据集，并且 <img src="http://latex.codecogs.com/gif.latex?a" />  在数据集中有 <img src="http://latex.codecogs.com/gif.latex?n" />  个不同取值，我们先把属性 <img src="http://latex.codecogs.com/gif.latex?a" />  的 <img src="http://latex.codecogs.com/gif.latex?n" />  个属性值**从小到大进行排序**。**所谓“二分”是指将这些属性值分为两个类别**（比方说把身高这一属性分为高于170和低于170两个类别）。
 
 这就产生了一个新问题，怎么找到合适的划分点（例如上面例子的170）呢？
 
-在对连续属性值排序完之后，由于有 $n$ 个不同取值，取每**两个取值的平均值作为划分点**的话，就有 $n-1$ 个候选划分点。我们需要做得就是按照准则（比方说用ID3算法的话就是信息增益）进行 $n-1$ 次判断。每次拿出一个候选划分点，把连续属性分为两类，转换为离散属性。然后基于这个基础计算准则，最终选出一个最优的属性值划分点。
+在对连续属性值排序完之后，由于有 <img src="http://latex.codecogs.com/gif.latex?n" />  个不同取值，取每**两个取值的平均值作为划分点**的话，就有 <img src="http://latex.codecogs.com/gif.latex?n-1" />  个候选划分点。我们需要做得就是按照准则（比方说用ID3算法的话就是信息增益）进行 <img src="http://latex.codecogs.com/gif.latex?n-1" />  次判断。每次拿出一个候选划分点，把连续属性分为两类，转换为离散属性。然后基于这个基础计算准则，最终选出一个最优的属性值划分点。
 
 注意！和离散属性不同，连续属性用于当前节点的划分后，其**后代节点依然可以使用该连续属性进一步划分**。比方说当前节点用身高低于170划分了，那么它的后代节点还可以用身高低于160来进一步划分。
 
@@ -147,35 +147,35 @@ $$Gini\_index(D,a) = \sum_{v=1}^{V}\frac{|D^v|}{|D|}Gini(D^v)$$
 
 - **如何在属性值缺失的情况下选择最优划分属性？**
 
-假设数据集为 $D$，有缺失值的属性为 $a$，令 $\tilde{D}$ 表示 $D$ 中没有缺失属性 $a$ 的样本子集。我们只能基于 $\tilde{D}$ 来判断属性 $a$ 的优劣。但是我们又希望包含缺失值的样本也能在建模过程体现出一定的影响了，因此要**重新定义准则**。在那之前，先定义几个新定义用到的变量：
+假设数据集为 <img src="http://latex.codecogs.com/gif.latex?D" /> ，有缺失值的属性为 <img src="http://latex.codecogs.com/gif.latex?a" /> ，令 <img src="http://latex.codecogs.com/gif.latex?\tilde{D}" />  表示 <img src="http://latex.codecogs.com/gif.latex?D" />  中没有缺失属性 <img src="http://latex.codecogs.com/gif.latex?a" />  的样本子集。我们只能基于 <img src="http://latex.codecogs.com/gif.latex?\tilde{D}" />  来判断属性 <img src="http://latex.codecogs.com/gif.latex?a" />  的优劣。但是我们又希望包含缺失值的样本也能在建模过程体现出一定的影响了，因此要**重新定义准则**。在那之前，先定义几个新定义用到的变量：
 
-$$\rho = \frac{\sum_{\mathbf{x} \in \tilde{D}}w_\mathbf{x}}{\sum_{\mathbf{x} \in D}w_\mathbf{x}}$$
+<img src="http://latex.codecogs.com/gif.latex?\rho = \frac{\sum_{\mathbf{x} \in \tilde{D}}w_\mathbf{x}}{\sum_{\mathbf{x} \in D}w_\mathbf{x}}" />
 
 
-$$\tilde{p_k} = \frac{\sum_{\mathbf{x} \in \tilde{D_k}}w_\mathbf{x}}{\sum_{\mathbf{x} \in \tilde{D}}w_\mathbf{x}},\quad (1 \leq k \leq |\mathcal{Y}|)$$
+<img src="http://latex.codecogs.com/gif.latex?\tilde{p_k} = \frac{\sum_{\mathbf{x} \in \tilde{D_k}}w_\mathbf{x}}{\sum_{\mathbf{x} \in \tilde{D}}w_\mathbf{x}},\quad (1 \leq k \leq |\mathcal{Y}|)" />
 
-$$\tilde{r_v} = \frac{\sum_{\mathbf{x} \in \tilde{D^v}}w_\mathbf{x}}{\sum_{\mathbf{x} \in \tilde{D}}w_\mathbf{x}},\quad (1 \leq v \leq V)$$
+<img src="http://latex.codecogs.com/gif.latex?\tilde{r_v} = \frac{\sum_{\mathbf{x} \in \tilde{D^v}}w_\mathbf{x}}{\sum_{\mathbf{x} \in \tilde{D}}w_\mathbf{x}},\quad (1 \leq v \leq V)" />
 
-$\rho$ 表示**无缺失值样本所占的比例**;
+<img src="http://latex.codecogs.com/gif.latex?\rho" />  表示**无缺失值样本所占的比例**;
 
-$\tilde{p_k}$ 表示**无缺失值样本中第 $k$ 类所占的比例**;
+<img src="http://latex.codecogs.com/gif.latex?\tilde{p_k}" />  表示**无缺失值样本中第 <img src="http://latex.codecogs.com/gif.latex?k" />  类所占的比例**;
 
-$\tilde{r_v}$ 表示**无缺失值样本中在属性 $a$ 上取值 $a^v$ 的样本所占的比例** ;
+<img src="http://latex.codecogs.com/gif.latex?\tilde{r_v}" />  表示**无缺失值样本中在属性 <img src="http://latex.codecogs.com/gif.latex?a" />  上取值 <img src="http://latex.codecogs.com/gif.latex?a^v" />  的样本所占的比例** ;
 
-注意，这里的 $w_\mathbf{x}$ 表示样本的权值，它是**含缺失值样本参与建模**的一种方式。在根节点处初始时，所有样本 $\mathbf{x}$ 的权重都为1。
+注意，这里的 <img src="http://latex.codecogs.com/gif.latex?w_\mathbf{x}" />  表示样本的权值，它是**含缺失值样本参与建模**的一种方式。在根节点处初始时，所有样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  的权重都为1。
 
 接下来重新定义信息熵和信息增益，推广到样本含缺失值的情况：
 
-$$Ent(\tilde{D}) = -\sum_{k=1}^{|\mathcal{Y|}}\tilde{p_k}log_2\tilde{p_k}$$
+<img src="http://latex.codecogs.com/gif.latex?Ent(\tilde{D}) = -\sum_{k=1}^{|\mathcal{Y|}}\tilde{p_k}log_2\tilde{p_k}" />
 
-$$Gain(D,a) = \rho \times Gain(\tilde{D},a)\\
-= \rho \times (Ent(\tilde{D}) - \sum_{v=1}^V\tilde{r_v}Ent(\tilde{D^v}))$$
+<img src="http://latex.codecogs.com/gif.latex?Gain(D,a) = \rho \times Gain(\tilde{D},a)\\
+= \rho \times (Ent(\tilde{D}) - \sum_{v=1}^V\tilde{r_v}Ent(\tilde{D^v}))" />
 
 按照新的定义来计算包含缺失值的属性的信息增益，然后和其他属性的信息增益相比，选出最优的。
 
 - **给定划分属性，如何划分缺失该属性值的样本？**
 
-假设有一个包含缺失值的属性被计算出是最优划分属性，那么我们就要按该属性的不同取值划分数据集了。缺失该属性值的样本怎么划分呢？答案是**按概率划分**，这样的样本会被**同时划入所有子节点**，并且其**权重更新**为对应的 $\tilde{r_v} \dot w_\mathbf{x}$。
+假设有一个包含缺失值的属性被计算出是最优划分属性，那么我们就要按该属性的不同取值划分数据集了。缺失该属性值的样本怎么划分呢？答案是**按概率划分**，这样的样本会被**同时划入所有子节点**，并且其**权重更新**为对应的 <img src="http://latex.codecogs.com/gif.latex?\tilde{r_v} \dot w_\mathbf{x}" /> 。
 
 可以把无缺失值的决策树建模想象为各样本权值恒为1的情形，它们**只对自己所属的属性值子集作贡献**。而样本含缺失值时，它会**以不同的概率对所有属性值子集作贡献**。
 
@@ -187,7 +187,7 @@ $$Gain(D,a) = \rho \times Gain(\tilde{D},a)\\
 
 这样有一个弊端就是，如果真实分类边界特别复杂，就需要画出很多超平面（线），在预测时就需要继续大量的属性测试（遍历决策树）才能得到结果，**预测时间开销很大**。
 
-**多变量决策树（multivariate decision tree）**，顾名思义，它不再是选择单个最优划分属性作为节点，而是试图寻找一个**最优的多属性的线性组合**作为节点，它的每个非叶节点都是一个形如 $\sum_{i=1}^d w_ia_i = t$ 的线性分类器。多变量决策树的决策边界能够**斜着走**，甚至**绕曲线走**，从而用更少的分支更好地逼近复杂的真实边界。
+**多变量决策树（multivariate decision tree）**，顾名思义，它不再是选择单个最优划分属性作为节点，而是试图寻找一个**最优的多属性的线性组合**作为节点，它的每个非叶节点都是一个形如 <img src="http://latex.codecogs.com/gif.latex?\sum_{i=1}^d w_ia_i = t" />  的线性分类器。多变量决策树的决策边界能够**斜着走**，甚至**绕曲线走**，从而用更少的分支更好地逼近复杂的真实边界。
 
 ## 习题
 
