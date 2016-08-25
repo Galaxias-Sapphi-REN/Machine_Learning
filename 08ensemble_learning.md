@@ -35,24 +35,24 @@
 
 #### 8.1
 
-> 问：假设抛硬币正面朝上的概率为 $p$，反面朝上的概率为 $1-p$。令 $H(n)$ 代表抛 $n$ 次硬币所得正面朝上的次数，则最多 $k$ 次正面朝上的概率为
+> 问：假设抛硬币正面朝上的概率为 <img src="http://latex.codecogs.com/gif.latex?p" /> ，反面朝上的概率为 <img src="http://latex.codecogs.com/gif.latex?1-p" /> 。令 <img src="http://latex.codecogs.com/gif.latex?H(n)" />  代表抛 <img src="http://latex.codecogs.com/gif.latex?n" />  次硬币所得正面朝上的次数，则最多 <img src="http://latex.codecogs.com/gif.latex?k" />  次正面朝上的概率为
 
-$$P(H(n) \leq k) = \sum_{i=0}^k \binom{n}{i} p^i (1-p)^{n-i}$$
+<img src="http://latex.codecogs.com/gif.latex?P(H(n) \leq k) = \sum_{i=0}^k \binom{n}{i} p^i (1-p)^{n-i}" />
 
-> 对 $\delta > 0,\quad k=(p-\delta)n$，有 Hoeffding 不等式
+> 对 <img src="http://latex.codecogs.com/gif.latex?\delta > 0,\quad k=(p-\delta)n" /> ，有 Hoeffding 不等式
 
-$$P(H(n) \leq (p-\delta)n) \leq e^{-2\delta^2n}$$
+<img src="http://latex.codecogs.com/gif.latex?P(H(n) \leq (p-\delta)n) \leq e^{-2\delta^2n}" />
 
 > 试推导出式（8.3）
 
 #### 8.2
 
-> 问：对于 0/1 损失函数来说，指数损失函数并非仅有的一直替代函数，考虑式（8.5），试证明：任意损失函数 $\ell(-f(\mathbf{x}H(\mathbf{x})))$，若对于 $H(\mathbf{x})$ 在区间 $[-\inf,\delta](\delta>0)$ 上单调递减，则 $\ell$ 是 0/1 损失函数的一致替代函数。
+> 问：对于 0/1 损失函数来说，指数损失函数并非仅有的一直替代函数，考虑式（8.5），试证明：任意损失函数 <img src="http://latex.codecogs.com/gif.latex?\ell(-f(\mathbf{x}H(\mathbf{x})))" /> ，若对于 <img src="http://latex.codecogs.com/gif.latex?H(\mathbf{x})" />  在区间 <img src="http://latex.codecogs.com/gif.latex?[-\inf,\delta](\delta>0)" />  上单调递减，则 <img src="http://latex.codecogs.com/gif.latex?\ell" />  是 0/1 损失函数的一致替代函数。
 
 
 #### 8.3
 
-> 问：从网上下载或自己编程实现 Adaboost，以不剪枝决策树为基学习器，在西瓜数据集 3.0$\alpha$ 上训练一个 AdaBoost 集成，并与图8.4进行比较。
+> 问：从网上下载或自己编程实现 Adaboost，以不剪枝决策树为基学习器，在西瓜数据集 3.0<img src="http://latex.codecogs.com/gif.latex?\alpha" />  上训练一个 AdaBoost 集成，并与图8.4进行比较。
 
 
 #### 8.4
@@ -62,7 +62,7 @@ $$P(H(n) \leq (p-\delta)n) \leq e^{-2\delta^2n}$$
 
 #### 8.5
 
-> 问：试编程实现 Bagging，以决策树桩为基学习器，在西瓜数据集 3.0$\alpha$ 上训练一个 Bagging 集成，并与图8.6进行比较。
+> 问：试编程实现 Bagging，以决策树桩为基学习器，在西瓜数据集 3.0<img src="http://latex.codecogs.com/gif.latex?\alpha" />  上训练一个 Bagging 集成，并与图8.6进行比较。
 
 
 #### 8.6
@@ -82,12 +82,12 @@ $$P(H(n) \leq (p-\delta)n) \leq e^{-2\delta^2n}$$
 
 #### 8.9*
 
-> 问：试设计一种可视的多样性度量，对习题8.3和习题8.5中得到的集成进行评估，并与 $\kappa$-误差图比较。
+> 问：试设计一种可视的多样性度量，对习题8.3和习题8.5中得到的集成进行评估，并与 <img src="http://latex.codecogs.com/gif.latex?\kappa" /> -误差图比较。
 
 
 #### 8.10*
 
-> 问：试设计一种能提升 $k$ 近邻分类器性能的集成学习算法。
+> 问：试设计一种能提升 <img src="http://latex.codecogs.com/gif.latex?k" />  近邻分类器性能的集成学习算法。
 
 
 

@@ -31,9 +31,9 @@
 
 #### 9.1
 
-> 问：试证明： $p \geq 1$ 时，闵可夫斯基距离满足距离度量的四条基本性质；$0 \leq p \leq 1$ 时，闵可夫斯基距离不满足直递性，但满足非负性、同一性、对称性；$p$ 趋向无穷大时，闵可夫斯基距离等于对应分量的最大绝对距离，即
+> 问：试证明： <img src="http://latex.codecogs.com/gif.latex?p \geq 1" />  时，闵可夫斯基距离满足距离度量的四条基本性质；<img src="http://latex.codecogs.com/gif.latex?0 \leq p \leq 1" />  时，闵可夫斯基距离不满足直递性，但满足非负性、同一性、对称性；<img src="http://latex.codecogs.com/gif.latex?p" />  趋向无穷大时，闵可夫斯基距离等于对应分量的最大绝对距离，即
 
-$$\lim_{p \rightarrow + \inf} (\sum_{u=1}^n |x_{iu}-x_{ju}|^p)^{\frac{1}{p}} = \max_u |x_{iu}-x_{ju}|$$
+<img src="http://latex.codecogs.com/gif.latex?\lim_{p \rightarrow + \inf} (\sum_{u=1}^n |x_{iu}-x_{ju}|^p)^{\frac{1}{p}} = \max_u |x_{iu}-x_{ju}|" />
 
 
 
@@ -41,29 +41,29 @@ $$\lim_{p \rightarrow + \inf} (\sum_{u=1}^n |x_{iu}-x_{ju}|^p)^{\frac{1}{p}} = \
 
 > 问：同一样本空间中的集合 X 与 Z 之间的距离可通过 “豪斯多夫距离”（Hausdorff distance） 计算：
 
-$$dist_H(X,Z) = \max (dist_h(X,Z),dist_h(Z,X))$$
+<img src="http://latex.codecogs.com/gif.latex?dist_H(X,Z) = \max (dist_h(X,Z),dist_h(Z,X))" />
 
 > 其中
 
-$$dist_h(X,Z) = \max_{x \in X} \min_{z \in Z} \Vert \mathbf{x} - \mathbf{z} \Vert_2$$
+<img src="http://latex.codecogs.com/gif.latex?dist_h(X,Z) = \max_{x \in X} \min_{z \in Z} \Vert \mathbf{x} - \mathbf{z} \Vert_2" />
 
 > 试证明：豪斯多夫距离满足距离度量的四条基本性质。
 
 #### 9.3
 
-> 问：试析 $k$ 均值算法能否找到最小化式（9.24）的最优解。
+> 问：试析 <img src="http://latex.codecogs.com/gif.latex?k" />  均值算法能否找到最小化式（9.24）的最优解。
 
 
 
 #### 9.4
 
-> 问：试编程实现 $k$ 均值算法，设置三组不同的 $k$ 值、三组不同初始中心点，在西瓜数据集4.0上进行实验比较，并讨论怎样的初始中心有利于取得好结果。
+> 问：试编程实现 <img src="http://latex.codecogs.com/gif.latex?k" />  均值算法，设置三组不同的 <img src="http://latex.codecogs.com/gif.latex?k" />  值、三组不同初始中心点，在西瓜数据集4.0上进行实验比较，并讨论怎样的初始中心有利于取得好结果。
 
 
 
 #### 9.5
 
-> 问：基于 DBSCAN 的概念定义，若 $\mathbf{x}$ 为核心对象，由 $\mathbf{x}$ 密度可达的所有样本构成的集合为 X，试证明：X满足连接性（9.39）与最大性（9.40）。
+> 问：基于 DBSCAN 的概念定义，若 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  为核心对象，由 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  密度可达的所有样本构成的集合为 X，试证明：X满足连接性（9.39）与最大性（9.40）。
 
 
 
@@ -93,6 +93,6 @@ $$dist_h(X,Z) = \max_{x \in X} \min_{z \in Z} \Vert \mathbf{x} - \mathbf{z} \Ver
 
 #### 9.10*
 
-> 问：试设计一个能自动确定聚类数的改进 $k$ 均值算法，编程实现并在西瓜数据集4，0上运行。
+> 问：试设计一个能自动确定聚类数的改进 <img src="http://latex.codecogs.com/gif.latex?k" />  均值算法，编程实现并在西瓜数据集4，0上运行。
 
 

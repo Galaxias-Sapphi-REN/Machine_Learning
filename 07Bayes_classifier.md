@@ -20,73 +20,73 @@
 
 **贝叶斯决策论（Bayesian decision theory）**是概率框架下实施决策的基本方法。具体来说，在分类任务中，贝叶斯决策论基于概率和误判损失选择出最优的类别标记。
 
-以多分类任务为例，假设有 $N$ 种标记，即 $\mathcal{Y} = {c_1, c_2,..., c_N}$，用 $\lambda_{ij}$ 表示把一个真实标记为 $c_i$ 的样本误分类为 $c_j$ 所产生的损失。那么将样本 $\mathbf{x}$ 分类为 $c_i$ 的**期望损失（expected loss）**或者说，在样本 $\mathbf{x}$ s上的**条件风险（conditional risk）**：
+以多分类任务为例，假设有 <img src="http://latex.codecogs.com/gif.latex?N" />  种标记，即 <img src="http://latex.codecogs.com/gif.latex?\mathcal{Y} = {c_1, c_2,..., c_N}" /> ，用 <img src="http://latex.codecogs.com/gif.latex?\lambda_{ij}" />  表示把一个真实标记为 <img src="http://latex.codecogs.com/gif.latex?c_i" />  的样本误分类为 <img src="http://latex.codecogs.com/gif.latex?c_j" />  所产生的损失。那么将样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  分类为 <img src="http://latex.codecogs.com/gif.latex?c_i" />  的**期望损失（expected loss）**或者说，在样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  s上的**条件风险（conditional risk）**：
 
-$$ R(c_i | \mathbf{x}) = \sum_{j=1}^N \lambda_{ij} P(c_j | \mathbf{x})$$
+<img src="http://latex.codecogs.com/gif.latex? R(c_i | \mathbf{x}) = \sum_{j=1}^N \lambda_{ij} P(c_j | \mathbf{x})" />
 
-它描述的是，给定一个样本 $\mathbf{x}$，把它分类为 $c_i$ 需要冒多大的风险。或者说，当样本真实标记不是 $c_i$ 时，会有多大的损失。这个损失是一个求和，每一个求和项都是某一类别的后验概率和对应误分类损失的积。（**注**：书中这个地方不够细致，求和项的下标是要排除 $i$ 本身的）
+它描述的是，给定一个样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" /> ，把它分类为 <img src="http://latex.codecogs.com/gif.latex?c_i" />  需要冒多大的风险。或者说，当样本真实标记不是 <img src="http://latex.codecogs.com/gif.latex?c_i" />  时，会有多大的损失。这个损失是一个求和，每一个求和项都是某一类别的后验概率和对应误分类损失的积。（**注**：书中这个地方不够细致，求和项的下标是要排除 <img src="http://latex.codecogs.com/gif.latex?i" />  本身的）
 
 在单个样本条件风险的基础上，可以定义**总体风险**：
 
-$$ R(h) = \mathbb{E}_{\mathbf{x}}[R(h(\mathbf{x})\ |\ \mathbf{x})]$$
+<img src="http://latex.codecogs.com/gif.latex? R(h) = \mathbb{E}_{\mathbf{x}}[R(h(\mathbf{x})\ |\ \mathbf{x})]" />
 
-它描述的是，**所有样本的条件风险的数学期望**。其中 $h$ 是一种用于产生分类结果的判断准则。
+它描述的是，**所有样本的条件风险的数学期望**。其中 <img src="http://latex.codecogs.com/gif.latex?h" />  是一种用于产生分类结果的判断准则。
 
-那么我们的目标就是找出能最小化总体风险 $R(h)$ 的判断准则。怎样的判断准则能满足这个要求呢？很直观地，如果一个判断准则 $h$ 能最小化所有样本 $\mathbf{x}$ 的条件风险，那它对应的总体风险必然也是最小的。由此，可以得到**贝叶斯判定准则（Bayes decision rule）**：要最小化总体风险，只需**在每个样本上选择能使对应的条件风险 $R(c\ |\ \mathbf{x})$ 最小的标记**。即：
+那么我们的目标就是找出能最小化总体风险 <img src="http://latex.codecogs.com/gif.latex?R(h)" />  的判断准则。怎样的判断准则能满足这个要求呢？很直观地，如果一个判断准则 <img src="http://latex.codecogs.com/gif.latex?h" />  能最小化所有样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  的条件风险，那它对应的总体风险必然也是最小的。由此，可以得到**贝叶斯判定准则（Bayes decision rule）**：要最小化总体风险，只需**在每个样本上选择能使对应的条件风险 <img src="http://latex.codecogs.com/gif.latex?R(c\ |\ \mathbf{x})" />  最小的标记**。即：
 
-$$h^*(\mathbf{x}) = \arg \min_{c \in \mathcal{Y}} R(c\ |\ \mathbf{x})$$
+<img src="http://latex.codecogs.com/gif.latex?h^*(\mathbf{x}) = \arg \min_{c \in \mathcal{Y}} R(c\ |\ \mathbf{x})" />
 
-这个判断准则 $h^*$ 称为**贝叶斯最优分类器（Bayes optimal classifier）**，对应的总体风险 $R(h^*)$ 称为**贝叶斯风险（Bayes risk）**，而  $1-R(h^*)$ 则反映了分类器所能达到的最好性能，也即**模型精度的理论上限**。
+这个判断准则 <img src="http://latex.codecogs.com/gif.latex?h^*" />  称为**贝叶斯最优分类器（Bayes optimal classifier）**，对应的总体风险 <img src="http://latex.codecogs.com/gif.latex?R(h^*)" />  称为**贝叶斯风险（Bayes risk）**，而  <img src="http://latex.codecogs.com/gif.latex?1-R(h^*)" />  则反映了分类器所能达到的最好性能，也即**模型精度的理论上限**。
 
-进一步地，如果我们学习模型的目标是**令分类错误率最小**，那么分类正确时误分类损失 $\lambda_{ij}$ 为0，反之为1。这是条件风险就是：
+进一步地，如果我们学习模型的目标是**令分类错误率最小**，那么分类正确时误分类损失 <img src="http://latex.codecogs.com/gif.latex?\lambda_{ij}" />  为0，反之为1。这是条件风险就是：
 
-$$R(c\ |\ \mathbf{x}) = 1-P(c\ |\ \mathbf{x})$$
+<img src="http://latex.codecogs.com/gif.latex?R(c\ |\ \mathbf{x}) = 1-P(c\ |\ \mathbf{x})" />
 
-要令风险最小，我们只需要选择使样本 $\mathbf{x}$ 后验概率最大的一个类别标记就可以了。
+要令风险最小，我们只需要选择使样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  后验概率最大的一个类别标记就可以了。
 
 问题在于，**怎样获取后验概率呢？**
 
 事实上，从概率的角度来理解，机器学习的目标就是**基于有限的训练样本集尽可能准确地估计出后验概率**（当然，大多数机器学习技术无需准确估计出后验概率）。要实现这个目标，主要有两种策略：
 
-- 构建**判别式模型（discriminative models）**：给定样本 $\mathbf{x}$，直接对后验概率 $P(\mathbf{x}\ |\ c)$ 建模来预测 $c$。这类模型包括决策树、BP神经网络、支持向量机等等。
+- 构建**判别式模型（discriminative models）**：给定样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" /> ，直接对后验概率 <img src="http://latex.codecogs.com/gif.latex?P(\mathbf{x}\ |\ c)" />  建模来预测 <img src="http://latex.codecogs.com/gif.latex?c" /> 。这类模型包括决策树、BP神经网络、支持向量机等等。
 
-- 构建**生成式模型（generative models）** ：给定样本 $\mathbf{x}$，先对联合概率分布 $P(\mathbf{x},c)$ 建模，然后再利用联合概率计算出后验概率 $P(c\ |\ \mathbf{x})$，也即 $P(c\ |\ \mathbf{x}) = \frac{P(\mathbf{x},c)}{P(\mathbf{x})}$。
+- 构建**生成式模型（generative models）** ：给定样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" /> ，先对联合概率分布 <img src="http://latex.codecogs.com/gif.latex?P(\mathbf{x},c)" />  建模，然后再利用联合概率计算出后验概率 <img src="http://latex.codecogs.com/gif.latex?P(c\ |\ \mathbf{x})" /> ，也即 <img src="http://latex.codecogs.com/gif.latex?P(c\ |\ \mathbf{x}) = \frac{P(\mathbf{x},c)}{P(\mathbf{x})}" /> 。
 
-又因为联合概率 $P(\mathbf{x},c) = P(c\ |\ \mathbf{x}) \times P(\mathbf{x}) = P(\mathbf{x}\ |\ c) \times P(c)$，由此，能得到**贝叶斯定理**：
+又因为联合概率 <img src="http://latex.codecogs.com/gif.latex?P(\mathbf{x},c) = P(c\ |\ \mathbf{x}) \times P(\mathbf{x}) = P(\mathbf{x}\ |\ c) \times P(c)" /> ，由此，能得到**贝叶斯定理**：
 
-$$P(c\ |\ \mathbf{x}) = \frac{P(\mathbf{x}\ |\ c) \times P(c)}{P(\mathbf{x})}$$
+<img src="http://latex.codecogs.com/gif.latex?P(c\ |\ \mathbf{x}) = \frac{P(\mathbf{x}\ |\ c) \times P(c)}{P(\mathbf{x})}" />
 
 在贝叶斯定理中，每个概率都有约定俗成的名称：
 
-- $P(c\ |\ \mathbf{x})$ 是类标记 $c$ 相对于样本 $\mathbf{x}$ 的条件概率，也由于得自 $\mathbf{x}$ 的取值而被称作 $c$ 的后验概率。
+- <img src="http://latex.codecogs.com/gif.latex?P(c\ |\ \mathbf{x})" />  是类标记 <img src="http://latex.codecogs.com/gif.latex?c" />  相对于样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  的条件概率，也由于得自 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  的取值而被称作 <img src="http://latex.codecogs.com/gif.latex?c" />  的后验概率。
 
-- $P(\mathbf{x}\ |\ c)$ 是样本 $\mathbf{x}$ 相对于类标记 $c$ 的**类条件概率（class-conditional probability）**，或称为**似然（likelihood）**，也由于得自 $c$ 的取值而被称作 $\mathbf{x}$ 的后验概率。
+- <img src="http://latex.codecogs.com/gif.latex?P(\mathbf{x}\ |\ c)" />  是样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  相对于类标记 <img src="http://latex.codecogs.com/gif.latex?c" />  的**类条件概率（class-conditional probability）**，或称为**似然（likelihood）**，也由于得自 <img src="http://latex.codecogs.com/gif.latex?c" />  的取值而被称作 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  的后验概率。
 
-- $P(c)$ 是 $c$ 的先验概率（也称为边缘概率），之所以称为"先验"是因为它不考虑任何 $\mathbf{x}$ 方面的因素。在这里又称为**类先验（prior）概率**。
+- <img src="http://latex.codecogs.com/gif.latex?P(c)" />  是 <img src="http://latex.codecogs.com/gif.latex?c" />  的先验概率（也称为边缘概率），之所以称为"先验"是因为它不考虑任何 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  方面的因素。在这里又称为**类先验（prior）概率**。
 
-- $P(\mathbf{x})$ 是 $\mathbf{x}$ 的先验概率。在这里是用作归一化的**证据（evidence）因子**，与类标记无关。
+- <img src="http://latex.codecogs.com/gif.latex?P(\mathbf{x})" />  是 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  的先验概率。在这里是用作归一化的**证据（evidence）因子**，与类标记无关。
 
-有了贝叶斯定理，如何估计后验概率 $P(c\ |\ \mathbf{x})$ 的问题就转化为**如何计算类先验概率 $P(c)$ 和类条件概率 $P(\mathbf{x}\ |\ c)$ **了。
+有了贝叶斯定理，如何估计后验概率 <img src="http://latex.codecogs.com/gif.latex?P(c\ |\ \mathbf{x})" />  的问题就转化为**如何计算类先验概率 <img src="http://latex.codecogs.com/gif.latex?P(c)" />  和类条件概率 <img src="http://latex.codecogs.com/gif.latex?P(\mathbf{x}\ |\ c)" />  **了。
 
-类先验概率 $P(c)$ 表示的是**样本空间中各类样本的比例**，根据大数定律，**当训练集包含足够多的独立同分布样本**时，类先验概率可以直接通过**训练集中各类样本出现的频率**进行估计。
+类先验概率 <img src="http://latex.codecogs.com/gif.latex?P(c)" />  表示的是**样本空间中各类样本的比例**，根据大数定律，**当训练集包含足够多的独立同分布样本**时，类先验概率可以直接通过**训练集中各类样本出现的频率**进行估计。
 
-类条件概率 $P(\mathbf{x}\ |\ c)$ 的情况就复杂多了，它涉及到类 $c$ 中**样本 $\mathbf{x}$ 所有属性的联合概率**，假设每个样本有 $d$ 个二值属性，那么可能的取值组合就多达 $2^d$ 个，这个数目可能**远多于训练集的规模**，也就意味着很多样本的取值没有在训练集中出现，所以**直接用训练集出现的频率进行估计是不可行的**。必须注意**未被观测到**和**出现概率为0**的区别。
+类条件概率 <img src="http://latex.codecogs.com/gif.latex?P(\mathbf{x}\ |\ c)" />  的情况就复杂多了，它涉及到类 <img src="http://latex.codecogs.com/gif.latex?c" />  中**样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  所有属性的联合概率**，假设每个样本有 <img src="http://latex.codecogs.com/gif.latex?d" />  个二值属性，那么可能的取值组合就多达 <img src="http://latex.codecogs.com/gif.latex?2^d" />  个，这个数目可能**远多于训练集的规模**，也就意味着很多样本的取值没有在训练集中出现，所以**直接用训练集出现的频率进行估计是不可行的**。必须注意**未被观测到**和**出现概率为0**的区别。
 
-**注意**，上述讨论中，均假设属性是离散型，对于连续型属性，只需把概率质量函数 $P(\cdot)$ 换为概率密度函数 $p(\cdot)$ 就可以了。
+**注意**，上述讨论中，均假设属性是离散型，对于连续型属性，只需把概率质量函数 <img src="http://latex.codecogs.com/gif.latex?P(\cdot)" />  换为概率密度函数 <img src="http://latex.codecogs.com/gif.latex?p(\cdot)" />  就可以了。
 
 ## 极大似然估计
 
 估计类条件概率的一种常用策略是：先**假定该类样本服从某种确定的概率分布形式**，然后再**基于训练集中的该类样本对假定的概率分布的参数进行估计**。比方说假定该类样本服从高斯分布，那么接下来就是利用训练集中该类样本来估计高斯分布的参数——均值和方差。
 
-具体来说，如果类 $c$ 的样本服从参数为 $\theta_c$（可能不止一个参数）的分布，那么我们从样本空间抽取到该类的某一个样本 $\mathbf{x}$ 的概率就是 $P(\mathbf{x}\ |\ \theta_c)$。使用 $D_c$ 来表示训练集中类 $c$ 的子集，可以定义数据集 $D_c$ 的**似然（likelihood）**为：
+具体来说，如果类 <img src="http://latex.codecogs.com/gif.latex?c" />  的样本服从参数为 <img src="http://latex.codecogs.com/gif.latex?\theta_c" /> （可能不止一个参数）的分布，那么我们从样本空间抽取到该类的某一个样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  的概率就是 <img src="http://latex.codecogs.com/gif.latex?P(\mathbf{x}\ |\ \theta_c)" /> 。使用 <img src="http://latex.codecogs.com/gif.latex?D_c" />  来表示训练集中类 <img src="http://latex.codecogs.com/gif.latex?c" />  的子集，可以定义数据集 <img src="http://latex.codecogs.com/gif.latex?D_c" />  的**似然（likelihood）**为：
 
-$$P(D_c\ |\ \theta_c) = \prod_{\mathbf{x} \in D_c} P(\mathbf{x}\ |\ \theta_c)$$
+<img src="http://latex.codecogs.com/gif.latex?P(D_c\ |\ \theta_c) = \prod_{\mathbf{x} \in D_c} P(\mathbf{x}\ |\ \theta_c)" />
 
 由于**连乘操作容易造成下溢**，实际任务中通常使用**对数似然（log-likelihood）**代替：
 
-$$LL(\theta_c) = \log P(D_c\ |\ \theta_c) = \sum_{\mathbf{x} \in D_c} \log P(\mathbf{x}\ |\ \theta_c)$$
+<img src="http://latex.codecogs.com/gif.latex?LL(\theta_c) = \log P(D_c\ |\ \theta_c) = \sum_{\mathbf{x} \in D_c} \log P(\mathbf{x}\ |\ \theta_c)" />
 
-所谓**极大似然估计（Maximum Likelihood Estimation，简称MLE）**就是**找出令似然最大的参数 $\theta_c$**。也即从 $\theta_c$ 的所有可能取值中找到一个**令所抽取样本出现的可能性最大**的值。
+所谓**极大似然估计（Maximum Likelihood Estimation，简称MLE）**就是**找出令似然最大的参数 <img src="http://latex.codecogs.com/gif.latex?\theta_c" /> **。也即从 <img src="http://latex.codecogs.com/gif.latex?\theta_c" />  的所有可能取值中找到一个**令所抽取样本出现的可能性最大**的值。
 
 求解的过程也很简单，就是求似然函数的导数，令导数为0，得到**似然方程**，解似然方程得到最优解，也即该类样本分布的参数。
 
@@ -98,41 +98,41 @@ P.S. 关于最大似然、最大后验与贝叶斯估计的爱恨纠缠可以看
 
 ## 朴素贝叶斯分类器
 
-前面提到了，估计后验概率 $P(c\ |\ \mathbf{x})$ 最大的一个难处是：类条件概率 $P(\mathbf{x}\ |\ c)$ 是所有属性上的联合概率，而多个属性的不同属性值组合并不一定全部囊括在训练集内，所以很难通过训练集估计。
+前面提到了，估计后验概率 <img src="http://latex.codecogs.com/gif.latex?P(c\ |\ \mathbf{x})" />  最大的一个难处是：类条件概率 <img src="http://latex.codecogs.com/gif.latex?P(\mathbf{x}\ |\ c)" />  是所有属性上的联合概率，而多个属性的不同属性值组合并不一定全部囊括在训练集内，所以很难通过训练集估计。
 
 为了避免这个障碍，**朴素贝叶斯分类器（naive Bayes clssifier）**采用**属性条件独立性假设（attribute conditional independence assumption）**。也就是说，假设**所有属性相互独立，单独地对分类结果产生影响**。
 
 基于这个假设，可以把类条件概率写成连乘的形式，因此贝叶斯定理可重写为：
 
-$$P(c\ |\ \mathbf{x}) = \frac{P(\mathbf{x}\ |\ c) \times P(c)}{P(\mathbf{x})} = \frac{P(c)}{P(\mathbf{x})} \prod_{i=1}^{d} P(x_i\ |\ c) \qquad (1)$$
+<img src="http://latex.codecogs.com/gif.latex?P(c\ |\ \mathbf{x}) = \frac{P(\mathbf{x}\ |\ c) \times P(c)}{P(\mathbf{x})} = \frac{P(c)}{P(\mathbf{x})} \prod_{i=1}^{d} P(x_i\ |\ c) \qquad (1)" />
 
-其中 $d$ 为属性数目， $x_i$ 为样本 $\mathbf{x}$ 在第 $i$ 个属性上的取值。
+其中 <img src="http://latex.codecogs.com/gif.latex?d" />  为属性数目， <img src="http://latex.codecogs.com/gif.latex?x_i" />  为样本 <img src="http://latex.codecogs.com/gif.latex?\mathbf{x}" />  在第 <img src="http://latex.codecogs.com/gif.latex?i" />  个属性上的取值。
 
-又因为 $P(\mathbf{x})$ 与类别无关，所以**朴素贝叶斯分类器的表达式**可以写为：
+又因为 <img src="http://latex.codecogs.com/gif.latex?P(\mathbf{x})" />  与类别无关，所以**朴素贝叶斯分类器的表达式**可以写为：
 
-$$h(\mathbf{x}) = \arg \max_{c \in \mathcal{Y}} P(c) \prod_{i=1}^{d} P(x_i\ |\ c)$$
+<img src="http://latex.codecogs.com/gif.latex?h(\mathbf{x}) = \arg \max_{c \in \mathcal{Y}} P(c) \prod_{i=1}^{d} P(x_i\ |\ c)" />
 
-前面已经提到过，当训练集包含足够多独立同分布样本时，类先验概率 $P(c)$ 可以直接算出，也即训练集该类样本的数目占训练集规模的比例：
+前面已经提到过，当训练集包含足够多独立同分布样本时，类先验概率 <img src="http://latex.codecogs.com/gif.latex?P(c)" />  可以直接算出，也即训练集该类样本的数目占训练集规模的比例：
 
-$$P(c) = \frac{|D_c|}{|D|} \qquad (2)$$
+<img src="http://latex.codecogs.com/gif.latex?P(c) = \frac{|D_c|}{|D|} \qquad (2)" />
 
-而条件概率 $P(x_i\ |\ c)$，根据属性类型分离散和连续两种情况：
+而条件概率 <img src="http://latex.codecogs.com/gif.latex?P(x_i\ |\ c)" /> ，根据属性类型分离散和连续两种情况：
 
-- 离散型属性：条件概率 $P(x_i\ |\ c)$ 可以估计为，在类别 $c$ 的样本子集中，第 $i$ 个属性取值为 $x_i$ 的样本所占的比例：
+- 离散型属性：条件概率 <img src="http://latex.codecogs.com/gif.latex?P(x_i\ |\ c)" />  可以估计为，在类别 <img src="http://latex.codecogs.com/gif.latex?c" />  的样本子集中，第 <img src="http://latex.codecogs.com/gif.latex?i" />  个属性取值为 <img src="http://latex.codecogs.com/gif.latex?x_i" />  的样本所占的比例：
 
-$$P(x_i\ |\ c) = \frac{|D_{c,x_i}|}{|D_c|} \qquad (3)$$
+<img src="http://latex.codecogs.com/gif.latex?P(x_i\ |\ c) = \frac{|D_{c,x_i}|}{|D_c|} \qquad (3)" />
 
-- 连续性属性：替换为概率密度函数，假设第 $i$ 个属性服从高斯分布，那么条件概率就写成 $p(x_i\ |\ c) \sim \mathcal{N}(\mu_{c,i},\sigma_{c,i}^2)$。我们利用类别 $c$ 的样本子集在该属性上的取值算出分布的均值和方差，然后把属性取值 $x_i$ 代入概率密度函数就可算出这个条件概率。
+- 连续性属性：替换为概率密度函数，假设第 <img src="http://latex.codecogs.com/gif.latex?i" />  个属性服从高斯分布，那么条件概率就写成 <img src="http://latex.codecogs.com/gif.latex?p(x_i\ |\ c) \sim \mathcal{N}(\mu_{c,i},\sigma_{c,i}^2)" /> 。我们利用类别 <img src="http://latex.codecogs.com/gif.latex?c" />  的样本子集在该属性上的取值算出分布的均值和方差，然后把属性取值 <img src="http://latex.codecogs.com/gif.latex?x_i" />  代入概率密度函数就可算出这个条件概率。
 
 #### 平滑
 
-注意了，若**某个属性值在训练集中没有与某个类同时出现过**，那么它对应的条件概率 $P(x_i\ |\ c)$ 就为0。在连乘中，这就意味着整个式子值为0了，**其他属性携带的信息都被抹去了**。这是很常见的情况，举个例子，假设有一篇新闻应该在体育版发布的，它包含了 “罗纳尔多” 这个词，但由于我们构造分类器时，训练集中所有 “体育” 类的文本都没有出现这个词，于是，该新闻按照式（1）计算出的体育类的条件概率必定为0；而恰好 “娱乐” 类的文本中有一篇包含了这个词，那么计算出的娱乐类的条件概率就大于0，从而使得这篇新闻被误分到娱乐版发布了，这显然很不合理。
+注意了，若**某个属性值在训练集中没有与某个类同时出现过**，那么它对应的条件概率 <img src="http://latex.codecogs.com/gif.latex?P(x_i\ |\ c)" />  就为0。在连乘中，这就意味着整个式子值为0了，**其他属性携带的信息都被抹去了**。这是很常见的情况，举个例子，假设有一篇新闻应该在体育版发布的，它包含了 “罗纳尔多” 这个词，但由于我们构造分类器时，训练集中所有 “体育” 类的文本都没有出现这个词，于是，该新闻按照式（1）计算出的体育类的条件概率必定为0；而恰好 “娱乐” 类的文本中有一篇包含了这个词，那么计算出的娱乐类的条件概率就大于0，从而使得这篇新闻被误分到娱乐版发布了，这显然很不合理。
 
-此时，我们就需要对概率值进行**平滑（smoothing）**了，最常用的是**拉普拉斯修正（Laplacian correction）**，假设**训练集中**包含 $N$ 个类别，第 $i$ 个属性包含 $N_i$ 种取值，则拉普拉斯修正把式（2）和式（3）修改为：
+此时，我们就需要对概率值进行**平滑（smoothing）**了，最常用的是**拉普拉斯修正（Laplacian correction）**，假设**训练集中**包含 <img src="http://latex.codecogs.com/gif.latex?N" />  个类别，第 <img src="http://latex.codecogs.com/gif.latex?i" />  个属性包含 <img src="http://latex.codecogs.com/gif.latex?N_i" />  种取值，则拉普拉斯修正把式（2）和式（3）修改为：
 
-$$P(c) = \frac{|D_c| + 1}{|D| + N} \qquad (4)$$
+<img src="http://latex.codecogs.com/gif.latex?P(c) = \frac{|D_c| + 1}{|D| + N} \qquad (4)" />
 
-$$P(x_i\ |\ c) = \frac{|D_{c,x_i}| + 1}{|D_c| + N_i} \qquad (5)$$
+<img src="http://latex.codecogs.com/gif.latex?P(x_i\ |\ c) = \frac{|D_{c,x_i}| + 1}{|D_c| + N_i} \qquad (5)" />
 
 再回想一下上面新闻分类的例子，尽管所有 “体育” 类的文本都没有出现 “罗纳尔多” 这个词，但使用拉普拉斯修正后，这个词（文本分类中每个词是一个属性）对应的条件概率就不为0了，而是一个很小的值；而该新闻的其他词，比如 “足球”、“球场” 等等在体育类新闻中都出现得很频繁，所以最后累乘计算出的体育类的类条件概率就大于其他类，从而能正确地进行划分了。
 
@@ -158,9 +158,9 @@ $$P(x_i\ |\ c) = \frac{|D_{c,x_i}| + 1}{|D_c| + N_i} \qquad (5)$$
 
 **独依赖估计（One-Dependent Estimator，简称ODE）**是半朴素贝叶斯分类器最常用的一种策略，它假设的是**每个属性在类别之外最多仅依赖于一个其他属性**。也即：
 
-$$P(c\ |\ \mathbf{x}) \propto P(c) \prod_{i=1}^{d} P(x_i\ |\ c,{pa}_i)$$
+<img src="http://latex.codecogs.com/gif.latex?P(c\ |\ \mathbf{x}) \propto P(c) \prod_{i=1}^{d} P(x_i\ |\ c,{pa}_i)" />
 
-其中 ${pa}_i$ 是属性 $x_i$ 依赖的另一属性，称为 $x_i$ 的**父属性**。若已知父属性，就可以按式（5）来计算了。现在问题转化为**如何确定每个属性的父属性**？
+其中 <img src="http://latex.codecogs.com/gif.latex?{pa}_i" />  是属性 <img src="http://latex.codecogs.com/gif.latex?x_i" />  依赖的另一属性，称为 <img src="http://latex.codecogs.com/gif.latex?x_i" />  的**父属性**。若已知父属性，就可以按式（5）来计算了。现在问题转化为**如何确定每个属性的父属性**？
 
 这里介绍两种产生独依赖分类器的方法：
 
@@ -168,7 +168,7 @@ $$P(c\ |\ \mathbf{x}) \propto P(c) \prod_{i=1}^{d} P(x_i\ |\ c,{pa}_i)$$
 
 ![SPODE](https://raw.githubusercontent.com/familyld/Machine_Learning/master/graph/SPODE.jpg)
 
-在**SPODE（Super-Parent ODE）**中，所有属性都依赖于一个共同的属性，称为**超父（super-parent）**，比方说上图中的 $x_1$。可以通过交叉验证等模型选择方法来确定最合适的超父属性。
+在**SPODE（Super-Parent ODE）**中，所有属性都依赖于一个共同的属性，称为**超父（super-parent）**，比方说上图中的 <img src="http://latex.codecogs.com/gif.latex?x_1" /> 。可以通过交叉验证等模型选择方法来确定最合适的超父属性。
 
 #### TAN
 
@@ -177,13 +177,13 @@ $$P(c\ |\ \mathbf{x}) \propto P(c) \prod_{i=1}^{d} P(x_i\ |\ c,{pa}_i)$$
 **TAN（Tree augmented naive Bayes）**则是一种基于**最大带权生成树（maximum weighted spanning tree）**的方法，包含以下四个步骤：
 
 1. 计算任意两个属性间的**条件互信息（conditional mutual information）**：<br>
-$$I(x_i,x_j\ |\ y) = \sum_{x_i,x_j; c\in \mathcal{Y}}  P(x_i,x_j\ |\ c) \log \frac{ P(x_i,x_j\ |\ c)}{ P(x_i\ |\ c) P(x_j\ |\ c)}$$
+<img src="http://latex.codecogs.com/gif.latex?I(x_i,x_j\ |\ y) = \sum_{x_i,x_j; c\in \mathcal{Y}}  P(x_i,x_j\ |\ c) \log \frac{ P(x_i,x_j\ |\ c)}{ P(x_i\ |\ c) P(x_j\ |\ c)}" />
 
 2. 以属性为节点构建完全图，每条边的权重为对应的条件户信息。
 
 3. 构建此完全图的最大带权生成树。选一个节点作为根节点，把边转换为有向边。
 
-4. 加入类别节点 $y$，并增加从 $y$ 到每个属性的有向边。
+4. 加入类别节点 <img src="http://latex.codecogs.com/gif.latex?y" /> ，并增加从 <img src="http://latex.codecogs.com/gif.latex?y" />  到每个属性的有向边。
 
 #### AODE
 
@@ -195,7 +195,7 @@ $$I(x_i,x_j\ |\ y) = \sum_{x_i,x_j; c\in \mathcal{Y}}  P(x_i,x_j\ |\ c) \log \fr
 
 ODE假设每个属性最多依赖类别以外的另一属性，但如果我们继续放宽条件，**允许属性最多依赖类别以外的 k 个其他属性**，也即考虑属性间的**高阶依赖**，那就得到了 kDE。
 
-是不是考虑了高阶依赖就一定能带来性能提升呢？并不是这样的。随着 k 的增加，要准确估计条件概率 $P(x_i\ |\ c,\mathbf{pa}_i)$ **所需的训练样本会呈指数上升**。如果训练样本不够，很容易陷入高阶联合概率的泥沼；但如果训练样本非常充足，那就有可能带来泛化性能的提升。
+是不是考虑了高阶依赖就一定能带来性能提升呢？并不是这样的。随着 k 的增加，要准确估计条件概率 <img src="http://latex.codecogs.com/gif.latex?P(x_i\ |\ c,\mathbf{pa}_i)" />  **所需的训练样本会呈指数上升**。如果训练样本不够，很容易陷入高阶联合概率的泥沼；但如果训练样本非常充足，那就有可能带来泛化性能的提升。
 
 ## 贝叶斯网
 
@@ -209,20 +209,20 @@ ODE假设每个属性最多依赖类别以外的另一属性，但如果我们�
 
 所谓不完整的样本，说的是这个样本某些属性的值缺失了。将每个属性的取值看为一个变量，那么缺失的就可以看作“未观测”变量，比方说有的西瓜根蒂脱落了，没办法看出根蒂是“蜷缩”还是“硬挺”，那么这个西瓜样本的根蒂属性取值就是一个“未观测”变量，更准确地说，称作**隐变量（latent variable）**。
 
-整个训练集可以划分为已观测变量集 $X$ 和隐变量集 $Z$ 两部分。按照极大似然的思路，我们依然是想找出令训练集被观测到的概率最大的参数 $\Theta$。也即最大化对数似然：
+整个训练集可以划分为已观测变量集 <img src="http://latex.codecogs.com/gif.latex?X" />  和隐变量集 <img src="http://latex.codecogs.com/gif.latex?Z" />  两部分。按照极大似然的思路，我们依然是想找出令训练集被观测到的概率最大的参数 <img src="http://latex.codecogs.com/gif.latex?\Theta" /> 。也即最大化对数似然：
 
-$$LL(\Theta\ |\ X,Z) = \ln P(X,Z\ |\ \Theta)$$
+<img src="http://latex.codecogs.com/gif.latex?LL(\Theta\ |\ X,Z) = \ln P(X,Z\ |\ \Theta)" />
 
-但是，由于 $Z$ 是隐变量，我们没办法观测到，所以上面这个式子实际是没法求的。
+但是，由于 <img src="http://latex.codecogs.com/gif.latex?Z" />  是隐变量，我们没办法观测到，所以上面这个式子实际是没法求的。
 
 怎么办呢？EM算法的思路很简单，步骤如下：
 
-1. 设定一个初始的 $\Theta$
-2. 按当前的 $\Theta$ 推断隐变量 $Z$ 的（期望）值
-3. 基于已观测变量 $X$ 和 步骤2得到的 $Z$ 对 $\Theta$ 做最大似然估计得到新的 $\Theta$
-4. 若未收敛（比方说新的 $\Theta$ 与旧的 $\Theta$ 相差仍大于阈值），就回到步骤2，否则停止迭代
+1. 设定一个初始的 <img src="http://latex.codecogs.com/gif.latex?\Theta" />
+2. 按当前的 <img src="http://latex.codecogs.com/gif.latex?\Theta" />  推断隐变量 <img src="http://latex.codecogs.com/gif.latex?Z" />  的（期望）值
+3. 基于已观测变量 <img src="http://latex.codecogs.com/gif.latex?X" />  和 步骤2得到的 <img src="http://latex.codecogs.com/gif.latex?Z" />  对 <img src="http://latex.codecogs.com/gif.latex?\Theta" />  做最大似然估计得到新的 <img src="http://latex.codecogs.com/gif.latex?\Theta" />
+4. 若未收敛（比方说新的 <img src="http://latex.codecogs.com/gif.latex?\Theta" />  与旧的 <img src="http://latex.codecogs.com/gif.latex?\Theta" />  相差仍大于阈值），就回到步骤2，否则停止迭代
 
-EM算法可以看作是用**坐标下降（coordinate descent）**法来最大化对数似然下界的过程，每次固定 $Z$ 或者 $\Theta$ 中的一个去优化另一个，直到最后收敛到局部最优解。
+EM算法可以看作是用**坐标下降（coordinate descent）**法来最大化对数似然下界的过程，每次固定 <img src="http://latex.codecogs.com/gif.latex?Z" />  或者 <img src="http://latex.codecogs.com/gif.latex?\Theta" />  中的一个去优化另一个，直到最后收敛到局部最优解。
 
 理论上，用梯度下降也能求解带隐变量的参数估计问题，但按我的理解，由于隐变量的加入，使得求导这个步骤非常困难，计算也会随着隐变量数目上升而更加复杂，EM算法避免了这些麻烦。
 
@@ -251,7 +251,7 @@ EM算法可以看作是用**坐标下降（coordinate descent）**法来最大�
 
 #### 7.4
 
-> 问：实践中使用式（7.15）决定分类类别时，若数据的维数非常高，则概率连乘 $\prod_{i=1}^d P(x_i | c)$ 的结果通常会非常接近于0从而导致下溢。试述防止下溢的可能方案。
+> 问：实践中使用式（7.15）决定分类类别时，若数据的维数非常高，则概率连乘 <img src="http://latex.codecogs.com/gif.latex?\prod_{i=1}^d P(x_i | c)" />  的结果通常会非常接近于0从而导致下溢。试述防止下溢的可能方案。
 
 #### 7.5
 
@@ -263,11 +263,11 @@ EM算法可以看作是用**坐标下降（coordinate descent）**法来最大�
 
 #### 7.7
 
-> 问：给定d个二值属性的二分类任务，假设对于任何先验概率项的估算至少需30个样例，则在朴素贝叶斯分类器式（7.15）中估算先验概率项 $P(c)$ 需 $30 \times 2 =60$ 个样例。试估计在AODE式（7.23）中估算先验概率项 $P(c, x_i)$ 所需的样例数（分别考虑最好和最坏情形）。
+> 问：给定d个二值属性的二分类任务，假设对于任何先验概率项的估算至少需30个样例，则在朴素贝叶斯分类器式（7.15）中估算先验概率项 <img src="http://latex.codecogs.com/gif.latex?P(c)" />  需 <img src="http://latex.codecogs.com/gif.latex?30 \times 2 =60" />  个样例。试估计在AODE式（7.23）中估算先验概率项 <img src="http://latex.codecogs.com/gif.latex?P(c, x_i)" />  所需的样例数（分别考虑最好和最坏情形）。
 
 #### 7.8
 
-> 问：考虑图7.3，试证明：在同父结构中，若 $x_1$ 的取值未知，则 $x_3\ ㅛ\ x_4$ 不成立；在顺序结构中，$y\ ㅗ\ z | x$，但 $y\ ㅛ\ z$ 不成立。
+> 问：考虑图7.3，试证明：在同父结构中，若 <img src="http://latex.codecogs.com/gif.latex?x_1" />  的取值未知，则 <img src="http://latex.codecogs.com/gif.latex?x_3\ ㅛ\ x_4" />  不成立；在顺序结构中，<img src="http://latex.codecogs.com/gif.latex?y\ ㅗ\ z | x" /> ，但 <img src="http://latex.codecogs.com/gif.latex?y\ ㅛ\ z" />  不成立。
 
 #### 7.9
 

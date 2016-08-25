@@ -136,13 +136,7 @@ SVM的目标便是找到**具有最大间隔（maximum margin）**的划分超�
 
 注意，由于式（1）的约束条件是**不等式约束**，所以求解过程要求满足**KKT（Karush-Kuhn-Tucker）条件**：
 
-<img src="http://latex.codecogs.com/gif.latex?\left
-\{\begin{array}
-\\a_i \geq 0;
-\\y_i f(\mathbf{x}_i)-1 \geq 0;
-\\a_i (y_i f(\mathbf{x}_i)-1) = 0.
-\end{array}
-\right." />
+![SVM1](https://github.com/familyld/Machine_Learning/blob/master/graph/SVM1.png?raw=true)
 
 KKT条件说明了，对任何一个样本来说，要么对应的拉格朗日乘子为0，要么函数间隔等于1（即式（1）的约束条件取等号）。如果拉格朗日乘子为0，则这个样本对式（6）毫无贡献，不会影响到模型；如果函数间隔为1，则表明这个样本位于最大间隔边界上，是一个支持向量。它揭示了SVM的一个重要性质：**最终模型只与支持向量有关，因此训练完成后，大部分的训练样本都不需保留**（支持向量被保留下来用于计算新样本的预测值，也即式（6））。
 
@@ -305,13 +299,7 @@ KKT条件说明了，对任何一个样本来说，要么对应的拉格朗日�
 
 其中 <img src="http://latex.codecogs.com/gif.latex?\ell_{0/1}" />  是**0/1损失函数**：
 
-<img src="http://latex.codecogs.com/gif.latex?\ell_{0/1}(z)=
-\left
-\{\begin{array}
-\\1, \quad if\ z<0;
-\\0, \quad otherwise.
-\end{array}
-\right." />
+![SVM2](https://github.com/familyld/Machine_Learning/blob/master/graph/SVM2.png?raw=true)
 
 它的含义很简单：如果分类正确，那么函数间隔必定大于等于1，此时损失为0；如果分类错误，那么函数间隔必定小于等于-1，此时损失为1。
 
@@ -367,14 +355,7 @@ KKT条件说明了，对任何一个样本来说，要么对应的拉格朗日�
 
 类似地，由于式（14）的约束条件是**不等式约束**，所以求解过程要求满足**KKT（Karush-Kuhn-Tucker）条件**：
 
-$$\left
-\{\begin{array}
-\\a_i \geq 0,\ \mu_i \geq 0;
-\\y_i f(\mathbf{x}_i)-1+\xi_i \geq 0;
-\\a_i (y_i f(\mathbf{x}_i)-1+\xi_i) = 0;
-\\\xi_i \geq 0,\ \mu_i\xi_i = 0.
-\end{array}
-\right.$$
+![SVM3](https://github.com/familyld/Machine_Learning/blob/master/graph/SVM13aw=true)
 
 KKT条件可以理解为下面几点：
 
@@ -464,13 +445,7 @@ KKT条件可以理解为下面几点：
 
 其中 <img src="http://latex.codecogs.com/gif.latex?C" />  为正则化常数， <img src="http://latex.codecogs.com/gif.latex?\ell_{\epsilon}" />  称为 **<img src="http://latex.codecogs.com/gif.latex?\epsilon-" /> 不敏感损失（<img src="http://latex.codecogs.com/gif.latex?\epsilon-" /> insensitive loss）**函数。定义如下：
 
-<img src="http://latex.codecogs.com/gif.latex?\ell_{、epsilon}(z)=
-\left
-\{\begin{array}
-\\0, \quad if\ |z| \leq \epsilon;
-\\|z|-\epsilon, \quad otherwise.
-\end{array}
-\right." />
+![SVM4](https://github.com/familyld/Machine_Learning/blob/master/graph/SVM4.png?raw=true)
 
 引入松弛变量 <img src="http://latex.codecogs.com/gif.latex?\xi_i" />  和 <img src="http://latex.codecogs.com/gif.latex?\hat{\xi}_i" /> ，分别表示**间隔带两侧的松弛程度**，它们**可以设定为不同的值**。此时，目标函数式（18）可以重写为：
 
